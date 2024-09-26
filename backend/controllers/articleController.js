@@ -15,4 +15,13 @@ const createArticle = async (req, res) => {
   }
 }
 
-module.exports = { createArticle }
+const getAllArticles = async (req, res) => {
+  try {
+    const articles = await Article.find()
+    res.status(200).json(articles)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
+module.exports = { createArticle, getAllArticles }
