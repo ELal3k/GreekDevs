@@ -1,3 +1,4 @@
+const { message } = require("prompt")
 const Article = require("../models/articleModel")
 
 const createArticle = async (req, res) => {
@@ -24,4 +25,17 @@ const getAllArticles = async (req, res) => {
   }
 }
 
-module.exports = { createArticle, getAllArticles }
+const deleteArticle = async (req, res) => {
+  try {
+    const article = await Article.findByIdAndDelete(req.params.id)
+    if (!Article) {
+      return req.status(404).json({ message: "Article not found" })
+    }
+
+    res.status(200).json({ message: "Article deleted successfully" })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
+module.exports = { createArticle, getAllArticles, deleteArticle }
