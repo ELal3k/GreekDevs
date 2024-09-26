@@ -38,4 +38,30 @@ const deleteArticle = async (req, res) => {
   }
 }
 
-module.exports = { createArticle, getAllArticles, deleteArticle }
+const updateArticle = async (req, res) => {
+  try {
+    const { title, content } = req.body
+
+    const article = await Article.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        content,
+        updatedAt: Date.now(),
+      },
+      { new: true, runValidators: true }
+    )
+
+    console.log(article.title)
+
+    if (!Article) {
+      return req.status(404).json({ message: "Article not found" })
+    }
+
+    res.status(200).json(article)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+}
+
+module.exports = { createArticle, getAllArticles, deleteArticle, updateArticle }
