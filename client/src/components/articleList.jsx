@@ -26,13 +26,17 @@ export default function ArticleList() {
 
   return (
     <div>
-      <h1>Articles</h1>
+      <h1>Greek Devs</h1>
       {articles.length === 0 ? (
         <p>No Articles found</p>
       ) : (
         <ul>
           {articles.map((article) => {
-            return <li key={article._id}>{article.title}</li>
+            return (
+              <li key={article._id}>
+                <h1>{article.title}</h1>
+              </li>
+            )
           })}
         </ul>
       )}
