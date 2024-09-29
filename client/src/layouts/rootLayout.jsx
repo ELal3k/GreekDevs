@@ -1,10 +1,11 @@
-import { Outlet } from "react-router-dom"
+import { NavLink, Outlet } from "react-router-dom"
 
 export default function RootLayout() {
   return (
     <>
-      <header className="bg-slate-400">
-        <h1>GreekDevs</h1>
+      <header className="bg-slate-400 flex justify-between">
+        <NavLink to="/">GreekDevs</NavLink>
+        <NavLink to="/edit">Create Article</NavLink>
       </header>
       <main>
         <Outlet />
