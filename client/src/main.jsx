@@ -6,8 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import RootLayout from "./layouts/rootLayout.jsx"
 import ErrorPage from "./pages/errorPage.jsx"
 import HomePage from "./pages/homePage.jsx"
-import EditPage from "./pages/editPage.jsx"
-
+import CreateArticle from "./pages/createARticlePage.jsx"
+import ArticlePage from "./pages/articlePage.jsx"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,7 +20,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/edit",
-        element: <EditPage />,
+        element: <CreateArticle />,
+      },
+      {
+        path: "/article/:id",
+        element: <ArticlePage />,
       },
     ],
   },

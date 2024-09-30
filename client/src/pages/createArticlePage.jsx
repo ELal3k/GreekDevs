@@ -1,7 +1,8 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-export default function EditPage() {
+
+export default function CreateArticle() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [error, setError] = useState("")
