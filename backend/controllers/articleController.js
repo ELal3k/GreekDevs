@@ -1,5 +1,10 @@
 const Article = require("../models/articleModel")
 
+const truncateContent = (content, maxLength = 100) => {
+  if (content.length <= maxLength) return content
+  return content.substr(0, maxLength).trim() + "..."
+}
+
 const createArticle = async (req, res) => {
   try {
     const { title, content } = req.body
@@ -18,7 +23,12 @@ const createArticle = async (req, res) => {
 const getAllArticles = async (req, res) => {
   try {
     const articles = await Article.find()
-    res.status(200).json(articles)
+
+    const truncatedArticles = articles.map((article) => ({
+      ...article.toObject(),
+      content: truncateContent(article.content),
+    }))
+    res.status(200).json(truncatedArticles)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

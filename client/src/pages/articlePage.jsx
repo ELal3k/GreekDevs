@@ -9,12 +9,19 @@ export default function ArticlePage() {
 
   const fetchArticle = async () => {
     try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/articles/get/${id}`
+      )
+      setArticle(response.data)
     } catch (err) {
-      const response = await axios.get()
-      console.error("Failed to fetch article", err)
-      setError("Failed to fetch article.Please try again later...")
+      console.err("Failed to fetch article", err)
+      setError("Failed to fetch the article. Please try again later.")
     }
   }
+
+  useEffect(() => {
+    fetchArticle()
+  }, [id])
 
   return <div>articlePage</div>
 }
