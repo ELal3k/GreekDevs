@@ -24,6 +24,20 @@ const getAllArticles = async (req, res) => {
   }
 }
 
+const getArticleById = async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id)
+
+    if (!article) {
+      return req.status(404).json({ message: "Article not found" })
+    }
+
+    res.status(200).json(article)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
 const deleteArticle = async (req, res) => {
   try {
     const article = await Article.findByIdAndDelete(req.params.id)
@@ -63,4 +77,10 @@ const updateArticle = async (req, res) => {
   }
 }
 
-module.exports = { createArticle, getAllArticles, deleteArticle, updateArticle }
+module.exports = {
+  createArticle,
+  getAllArticles,
+  deleteArticle,
+  updateArticle,
+  getArticleById,
+}
