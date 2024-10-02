@@ -8,6 +8,8 @@ import ErrorPage from "./pages/errorPage.jsx"
 import HomePage from "./pages/homePage.jsx"
 import CreateArticle from "./pages/createARticlePage.jsx"
 import ArticlePage from "./pages/articlePage.jsx"
+import AuthorArticlesPage from "./pages/authorArticlesPage.jsx"
+import EditArticlePage from "./pages/editArticlePage.jsx"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
       {
         path: "/article/:id",
         element: <ArticlePage />,
+      },
+      {
+        path: "/author_articles",
+        element: <AuthorArticlesPage />,
+      },
+      {
+        path: "/author_articles/edit/:id",
+        element: <EditArticlePage />,
       },
     ],
   },

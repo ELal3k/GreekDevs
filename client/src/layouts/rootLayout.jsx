@@ -5,7 +5,10 @@ export default function RootLayout() {
     <>
       <header className="bg-slate-400 flex justify-between">
         <NavLink to="/">GreekDevs</NavLink>
-        <NavLink to="/edit">Create Article</NavLink>
+        <div className=" w-1/6 flex justify-between">
+          <NavLink to="/edit">Create Article</NavLink>
+          <NavLink to="/author_articles">My Articles</NavLink>
+        </div>
       </header>
       <main>
         <Outlet />
