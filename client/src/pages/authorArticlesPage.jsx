@@ -52,12 +52,12 @@ export default function HomePage() {
             >
               Edit Article
             </Link>
-            <Link
-              to={`/article/${article._id}`}
-              className="inline-block px-4 py-2 bg-red-500 text-white text-sm rounded-md hover:bg-blue-600 transition-colors duration-300"
+            <button
+              onClick={() => handleDelete(article._id)}
+              className="inline-block px-4 py-2 bg-red-500 text-white text-sm rounded-md hover:bg-red-600 transition-colors duration-300"
             >
               Delete Article
-            </Link>
+            </button>
           </div>
         ))}
       </div>
