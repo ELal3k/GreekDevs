@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { useParams, Link, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css"
+import TurndownService from "turndown"
 
 export default function EditArticlePage() {
   const [article, setArticle] = useState({ title: "", content: "" })
   const [error, setError] = useState(null)
   const { id } = useParams()
   const navigate = useNavigate()
+
+  const turndownService = new TurndownService()
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -38,9 +41,10 @@ export default function EditArticlePage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      const markdownContent = turndownService.turndown(article.content)
       await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/articles/update/${id}`,
-        article
+        { ...article, content: markdownContent }
       )
       navigate("/author_articles")
     } catch (err) {

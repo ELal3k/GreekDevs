@@ -18,6 +18,21 @@ export default function HomePage() {
     }
   }
 
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this article?")) {
+      try {
+        await axios.delete(
+          `${import.meta.env.VITE_API_BASE_URL}/articles/delete/${id}`
+        )
+        // After successful deletion, refetch the articles to update the list
+        fetchArticles()
+      } catch (err) {
+        console.error("Failed to delete article", err)
+        setError("Failed to delete the article. Please try again.")
+      }
+    }
+  }
+
   useEffect(() => {
     fetchArticles()
   }, [])

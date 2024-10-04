@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 import axios from "axios"
+import MarkdownIt from "markdown-it"
+import DOMPurify from "dompurify"
 
 export default function ArticlePage() {
   const [article, setArticle] = useState(null)
   const [error, setError] = useState(null)
   const { id } = useParams()
+
+  const md = new MarkdownIt()
 
   const dateOptions = {
     weekday: "long",
@@ -31,6 +35,15 @@ export default function ArticlePage() {
     fetchArticle()
   }, [id])
 
+  const renderContent = (content) => {
+    // Convert Markdown to HTML
+    const rawHtml = md.render(content)
+    // Sanitize the HTML
+    const cleanHtml = DOMPurify.sanitize(rawHtml)
+    // Return an object for dangerouslySetInnerHTML
+    return { __html: cleanHtml }
+  }
+
   if (error) {
     return <div className="text-center mt-10 text-red-500">{error}</div>
   }
@@ -55,13 +68,10 @@ export default function ArticlePage() {
           )}
         </p>
       )}
-      <div className="prose max-w-none">
-        {article.content.split("\n").map((paragraph, index) => (
-          <p key={index} className="mb-4">
-            {paragraph}
-          </p>
-        ))}
-      </div>
+      <div
+        className="prose max-w-none"
+        dangerouslySetInnerHTML={renderContent(article.content)}
+      />
       <Link to="/" className="mt-6 inline-block text-blue-500 hover:underline">
         ← Back to articles
       </Link>
