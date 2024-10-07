@@ -23,6 +23,7 @@ export default function CreateArticle() {
         { indent: "+1" },
       ],
       ["link", "image"],
+      ["code-block"],
       ["clean"],
     ],
   }
