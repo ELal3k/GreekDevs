@@ -69,7 +69,7 @@ export default function ArticlePage() {
         </p>
       )}
       <div
-        className="prose max-w-none"
+        className="prose prose-slate max-w-none"
         dangerouslySetInnerHTML={renderContent(article.content)}
       />
       <Link to="/" className="mt-6 inline-block text-blue-500 hover:underline">

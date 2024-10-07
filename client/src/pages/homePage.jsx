@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
+import MarkdownIt from "markdown-it"
+import DOMPurify from "dompurify"
 
 export default function HomePage() {
   const [articles, setArticles] = useState([])
   const [error, setError] = useState(null)
+  const md = new MarkdownIt()
 
   const fetchArticles = async () => {
     try {
@@ -22,6 +25,14 @@ export default function HomePage() {
     fetchArticles()
   }, [])
 
+  const renderContent = (content) => {
+    // Convert Markdown to HTML
+    const rawHtml = md.render(content)
+    // Sanitize the HTML
+    const cleanHtml = DOMPurify.sanitize(rawHtml)
+    return { __html: cleanHtml }
+  }
+
   return (
     <div className="max-w-4xl mx-auto mt-10">
       <h1 className="text-3xl font-bold mb-6">Latest Articles</h1>
@@ -30,7 +41,10 @@ export default function HomePage() {
         {articles.map((article) => (
           <div key={article._id} className="border p-4 rounded-lg">
             <h2 className="text-xl font-semibold mb-2">{article.title}</h2>
-            <p className="text-gray-600 mb-4">{article.content}</p>
+            <div
+              className="text-gray-600 mb-4 prose"
+              dangerouslySetInnerHTML={renderContent(article.content)}
+            />{" "}
             <Link
               to={`/article/${article._id}`}
               className="text-blue-500 hover:underline"
