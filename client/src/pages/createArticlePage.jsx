@@ -40,6 +40,7 @@ export default function CreateArticle() {
     "indent",
     "link",
     "image",
+    "code-block",
   ]
 
   const handleSubmit = async (e) => {

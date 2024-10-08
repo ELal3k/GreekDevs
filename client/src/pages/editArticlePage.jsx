@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import axios from "axios"
 import { useParams, useNavigate } from "react-router-dom"
 import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css"
 import TurndownService from "turndown"
+import MarkdownIt from "markdown-it"
 
 export default function EditArticlePage() {
   const [article, setArticle] = useState({ title: "", content: "" })
@@ -11,7 +12,8 @@ export default function EditArticlePage() {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const turndownService = new TurndownService()
+  const turndownService = useMemo(() => new TurndownService(), [])
+  const md = useMemo(() => new MarkdownIt(), [])
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -19,7 +21,9 @@ export default function EditArticlePage() {
         const response = await axios.get(
           `${import.meta.env.VITE_API_BASE_URL}/articles/get/${id}`
         )
-        setArticle(response.data)
+        const htmlContent = md.render(response.data.content)
+
+        setArticle({ ...response.data, content: htmlContent })
         setError(null)
       } catch (err) {
         console.error("Failed to fetch article", err)
@@ -28,7 +32,7 @@ export default function EditArticlePage() {
     }
 
     fetchArticle()
-  }, [id])
+  }, [id, md])
 
   const handleTitleChange = (e) => {
     setArticle((prev) => ({ ...prev, title: e.target.value }))
