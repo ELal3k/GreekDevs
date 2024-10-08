@@ -34,20 +34,22 @@ export default function HomePage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
+    <div>
       <h1 className="text-3xl font-bold mb-6">Latest Articles</h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <div className="space-y-6">
         {articles.map((article) => (
-          <div key={article._id} className="border p-4 rounded-lg">
+          <div key={article._id} className="bg-white shadow rounded-lg p-6">
             <h2 className="text-xl font-semibold mb-2">{article.title}</h2>
             <div
-              className="text-gray-600 mb-4 prose"
-              dangerouslySetInnerHTML={renderContent(article.content)}
-            />{" "}
+              className="prose prose-slate max-w-none mb-4"
+              dangerouslySetInnerHTML={renderContent(
+                article.content.slice(0, 200) + "..."
+              )}
+            />
             <Link
               to={`/article/${article._id}`}
-              className="text-blue-500 hover:underline"
+              className="text-blue-500 hover:text-blue-600 font-medium"
             >
               Read more
             </Link>

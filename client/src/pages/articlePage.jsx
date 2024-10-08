@@ -53,7 +53,7 @@ export default function ArticlePage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+    <div className="bg-white shadow rounded-lg p-6">
       <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
       <p className="text-gray-600 mb-2">
         Created at:{" "}
@@ -69,10 +69,13 @@ export default function ArticlePage() {
         </p>
       )}
       <div
-        className="prose prose-slate max-w-none"
+        className="prose prose-slate max-w-none mb-6"
         dangerouslySetInnerHTML={renderContent(article.content)}
       />
-      <Link to="/" className="mt-6 inline-block text-blue-500 hover:underline">
+      <Link
+        to="/"
+        className="inline-block text-blue-500 hover:text-blue-600 font-medium"
+      >
         ← Back to articles
       </Link>
     </div>

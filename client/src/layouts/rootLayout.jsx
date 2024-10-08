@@ -2,21 +2,46 @@ import { NavLink, Outlet } from "react-router-dom"
 
 export default function RootLayout() {
   return (
-    <>
-      <header className="bg-slate-400 flex justify-between">
-        <NavLink to="/">GreekDevs</NavLink>
-        <div className=" w-1/6 flex justify-between">
-          <NavLink to="/edit">Create Article</NavLink>
-          <NavLink to="/author_articles">My Articles</NavLink>
+    <div className="flex flex-col min-h-screen">
+      <header className="bg-slate-800 text-white p-4">
+        <div className="container mx-auto flex justify-between items-center">
+          <NavLink to="/" className="text-2xl font-bold">
+            GreekDevs
+          </NavLink>
+          <nav>
+            <ul className="flex space-x-4">
+              <li>
+                <NavLink
+                  to="/edit"
+                  className={({ isActive }) =>
+                    isActive ? "text-blue-400" : "hover:text-blue-400"
+                  }
+                >
+                  Create Article
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/author_articles"
+                  className={({ isActive }) =>
+                    isActive ? "text-blue-400" : "hover:text-blue-400"
+                  }
+                >
+                  My Articles
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
         </div>
       </header>
-      <main>
+      <main className="flex-grow container mx-auto px-4 py-8">
         <Outlet />
       </main>
-
-      <footer>
-        <h1 className=" bg-fuchsia-500">Footer</h1>
+      <footer className="bg-slate-800 text-white p-4">
+        <div className="container mx-auto text-center">
+          <p>&copy; 2024 GreekDevs. All rights reserved.</p>
+        </div>
       </footer>
-    </>
+    </div>
   )
 }

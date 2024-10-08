@@ -87,17 +87,17 @@ export default function EditArticlePage() {
   ]
 
   if (error) {
-    return <div className="text-center mt-10 text-red-500">{error}</div>
+    return <div className="text-center  text-red-500">{error}</div>
   }
 
   if (!article) {
-    return <div className="text-center mt-10">Article not found.</div>
+    return <div className="text-center ">Article not found.</div>
   }
 
   console.log(article.content)
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold mb-4">Edit Article</h1>
+    <div className="bg-white shadow rounded-lg p-6">
+      <h1 className="text-3xl font-bold mb-6">Edit Article</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="title" className="block mb-1 font-semibold">
@@ -110,7 +110,7 @@ export default function EditArticlePage() {
             value={article.title}
             onChange={handleTitleChange}
             required
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <div>
@@ -123,7 +123,7 @@ export default function EditArticlePage() {
             onChange={handleContentChange}
             modules={modules}
             formats={formats}
-            className="h-64 mb-12"
+            className="h-64 mb-12 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
@@ -131,16 +131,16 @@ export default function EditArticlePage() {
           <button
             type="button"
             onClick={() => navigate("/author_articles")}
-            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
           >
             Cancel
           </button>
 
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            Update article
+            Update Article
           </button>
         </div>
       </form>
