@@ -80,7 +80,7 @@ export default function HomePage() {
       </div>
       {articles.length === 0 && (
         <p className="text-center text-gray-500 mt-8">
-          You haven't created any articles yet.
+          You haven&apos;t created any articles yet.
         </p>
       )}
       <div className="mt-8 text-center">
