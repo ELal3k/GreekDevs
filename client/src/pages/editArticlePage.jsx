@@ -5,6 +5,7 @@ import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css"
 import TurndownService from "turndown"
 import MarkdownIt from "markdown-it"
+import { modules, formats } from "../utils/quilConfig"
 
 export default function EditArticlePage() {
   const [article, setArticle] = useState({ title: "", content: "" })
@@ -56,35 +57,6 @@ export default function EditArticlePage() {
       setError("Failed to update the article. Please try again.")
     }
   }
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image"],
-      ["clean"],
-    ],
-  }
-
-  const formats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-  ]
 
   if (error) {
     return <div className="text-center  text-red-500">{error}</div>

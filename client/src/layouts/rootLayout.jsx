@@ -12,16 +12,6 @@ export default function RootLayout() {
             <ul className="flex space-x-4">
               <li>
                 <NavLink
-                  to="/edit"
-                  className={({ isActive }) =>
-                    isActive ? "text-blue-400" : "hover:text-blue-400"
-                  }
-                >
-                  Create Article
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
                   to="/author_articles"
                   className={({ isActive }) =>
                     isActive ? "text-blue-400" : "hover:text-blue-400"

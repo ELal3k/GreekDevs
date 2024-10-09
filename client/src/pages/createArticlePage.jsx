@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css"
 import TurndownService from "turndown"
+import { modules, formats } from "../utils/quilConfig"
 
 export default function CreateArticle() {
   const [title, setTitle] = useState("")
@@ -11,37 +12,6 @@ export default function CreateArticle() {
   const [error, setError] = useState("")
   const navigate = useNavigate()
   const turndownService = new TurndownService()
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image"],
-      ["code-block"],
-      ["clean"],
-    ],
-  }
-
-  const formats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "code-block",
-  ]
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -59,6 +29,8 @@ export default function CreateArticle() {
       setError("Failed to create article. Please try again.")
     }
   }
+
+  console.log(content)
   return (
     <div className="bg-white shadow rounded-lg p-6">
       <h1 className="text-3xl font-bold mb-6">Create New Article</h1>
