@@ -1,3 +1,4 @@
+const { message } = require("prompt")
 const Article = require("../models/articleModel")
 
 const truncateContent = (content, maxLength = 100) => {
@@ -77,8 +78,6 @@ const updateArticle = async (req, res) => {
       { new: true, runValidators: true }
     )
 
-    console.log(article.title)
-
     if (!article) {
       return req.status(404).json({ message: "Article not found" })
     }
@@ -89,10 +88,33 @@ const updateArticle = async (req, res) => {
   }
 }
 
+const getArticlesByAuthor = async (req, res) => {
+  try {
+    const { author } = req.params
+    const articles = await Article.find({ author })
+
+    if (articles.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No articles found by this author" })
+    }
+
+    const truncatedArticles = articles.map((article) => ({
+      ...article.toObject(),
+      content: truncateContent(article.content),
+    }))
+
+    res.status(200).json(truncatedArticles)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
 module.exports = {
   createArticle,
   getAllArticles,
   deleteArticle,
   updateArticle,
   getArticleById,
+  getArticlesByAuthor,
 }
