@@ -7,11 +7,12 @@ const truncateContent = (content, maxLength = 100) => {
 
 const createArticle = async (req, res) => {
   try {
-    const { title, content } = req.body
+    const { title, content, author } = req.body
 
     const newArticle = await Article.create({
       title,
       content,
+      author,
     })
 
     res.status(201).json(newArticle)
@@ -51,7 +52,7 @@ const getArticleById = async (req, res) => {
 const deleteArticle = async (req, res) => {
   try {
     const article = await Article.findByIdAndDelete(req.params.id)
-    if (!Article) {
+    if (!article) {
       return req.status(404).json({ message: "Article not found" })
     }
 
@@ -63,13 +64,14 @@ const deleteArticle = async (req, res) => {
 
 const updateArticle = async (req, res) => {
   try {
-    const { title, content } = req.body
+    const { title, content, author } = req.body
 
     const article = await Article.findByIdAndUpdate(
       req.params.id,
       {
         title,
         content,
+        author,
         updatedAt: Date.now(),
       },
       { new: true, runValidators: true }
@@ -77,7 +79,7 @@ const updateArticle = async (req, res) => {
 
     console.log(article.title)
 
-    if (!Article) {
+    if (!article) {
       return req.status(404).json({ message: "Article not found" })
     }
 
