@@ -8,13 +8,16 @@ const truncateContent = (content, maxLength = 100) => {
 
 const createArticle = async (req, res) => {
   try {
-    const { title, content, author } = req.body
+    const { title, content } = req.body
+    const author = req.user.id
 
     const newArticle = await Article.create({
       title,
       content,
       author,
     })
+
+    await newArticle.populate("author", "username")
 
     res.status(201).json(newArticle)
   } catch (err) {
