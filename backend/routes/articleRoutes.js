@@ -13,7 +13,7 @@ const router = express.Router()
 router.post("/post", createArticle)
 router.get("/get", getAllArticles)
 router.get("/get/:id", getArticleById)
-router.get("/author/:author")
+router.get("/author/:author", getArticlesByAuthor)
 router.delete("/delete/:id", deleteArticle)
 router.put("/update/:id", updateArticle)
 

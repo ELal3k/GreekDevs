@@ -91,7 +91,9 @@ const updateArticle = async (req, res) => {
 const getArticlesByAuthor = async (req, res) => {
   try {
     const { author } = req.params
-    const articles = await Article.find({ author })
+    const decodedAuthor = decodeURIComponent(author)
+
+    const articles = await Article.find({ author: decodedAuthor })
 
     if (articles.length === 0) {
       return res
