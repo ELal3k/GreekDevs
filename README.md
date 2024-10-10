@@ -38,3 +38,24 @@ E -->|markdown-it| F[HTML for Display]
 F -->|DOMPurify| G[Sanitized HTML]
 G -->|Render| H[Web Page]
 ```
+
+## Authentication flow
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant Database
+
+    Client->>Server: Sends login request (email, password)
+    Server->>Database: Verifies user credentials
+    Database-->>Server: Responds with user data (ID, username)
+    Server->>Client: Sends back JWT token
+
+    Client->>Server: Sends create article request (token, title, content)
+    Server->>Server: Verifies JWT token using middleware
+    Server->>Server: Extracts user ID from token
+    Server->>Database: Creates article with user ID as author
+    Database-->>Server: Returns newly created article
+    Server->>Client: Sends back created article with author info
+```
