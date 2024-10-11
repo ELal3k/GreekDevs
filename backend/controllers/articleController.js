@@ -1,4 +1,3 @@
-const { message } = require("prompt")
 const Article = require("../models/articleModel")
 
 const truncateContent = (content, maxLength = 100) => {
