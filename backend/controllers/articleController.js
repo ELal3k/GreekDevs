@@ -9,6 +9,11 @@ const truncateContent = (content, maxLength = 100) => {
 const createArticle = async (req, res) => {
   try {
     const { title, content } = req.body
+
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "Authentication required" })
+    }
+
     const author = req.user.id
 
     const newArticle = await Article.create({
@@ -27,12 +32,13 @@ const createArticle = async (req, res) => {
 
 const getAllArticles = async (req, res) => {
   try {
-    const articles = await Article.find()
+    const articles = await Article.find().populate("author", "username")
 
     const truncatedArticles = articles.map((article) => ({
       ...article.toObject(),
       content: truncateContent(article.content),
     }))
+
     res.status(200).json(truncatedArticles)
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -41,7 +47,10 @@ const getAllArticles = async (req, res) => {
 
 const getArticleById = async (req, res) => {
   try {
-    const article = await Article.findById(req.params.id)
+    const article = await Article.findById(req.params.id).populate(
+      "author",
+      "username"
+    )
 
     if (!article) {
       return req.status(404).json({ message: "Article not found" })
@@ -55,10 +64,19 @@ const getArticleById = async (req, res) => {
 
 const deleteArticle = async (req, res) => {
   try {
-    const article = await Article.findByIdAndDelete(req.params.id)
+    const article = await Article.findById(req.params.id)
+
     if (!article) {
       return req.status(404).json({ message: "Article not found" })
     }
+
+    if (article.author.toString() !== req.params.id) {
+      return res
+        .status(403)
+        .json({ message: "You can only delete your own articles" })
+    }
+
+    await Article.findByIdAndDelete(req.params.id)
 
     res.status(200).json({ message: "Article deleted successfully" })
   } catch (err) {
@@ -68,24 +86,34 @@ const deleteArticle = async (req, res) => {
 
 const updateArticle = async (req, res) => {
   try {
-    const { title, content, author } = req.body
+    const { title, content } = req.body
 
-    const article = await Article.findByIdAndUpdate(
-      req.params.id,
-      {
-        title,
-        content,
-        author,
-        updatedAt: Date.now(),
-      },
-      { new: true, runValidators: true }
-    )
+    const article = await Article.findById(req.pqrams.id)
 
     if (!article) {
       return req.status(404).json({ message: "Article not found" })
     }
 
-    res.status(200).json(article)
+    if (article.author.toString() !== req.params.id) {
+      return res
+        .status(403)
+        .json({ message: "You can only delete your own articles" })
+    }
+
+    const updatedArticle = await Article.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        content,
+        updatedAt: Date.now,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ).populate("author", "username")
+
+    res.status(200).json(updatedArticle)
   } catch (err) {
     res.status(400).json({ message: err.message })
   }
@@ -93,10 +121,12 @@ const updateArticle = async (req, res) => {
 
 const getArticlesByAuthor = async (req, res) => {
   try {
-    const { author } = req.params
-    const decodedAuthor = decodeURIComponent(author)
+    const { authorId } = req.params
 
-    const articles = await Article.find({ author: decodedAuthor })
+    const articles = await Article.find({ author: authorId }).populate(
+      "author",
+      "username"
+    )
 
     if (articles.length === 0) {
       return res
