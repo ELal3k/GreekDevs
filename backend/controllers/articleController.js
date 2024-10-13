@@ -7,14 +7,14 @@ const truncateContent = (content, maxLength = 100) => {
 
 const createArticle = async (req, res) => {
   try {
-    const { title, content } = req.body
-
+    const { title, content, author } = req.body
+    /* Use with the authentication
     if (!req.user || !req.user.id) {
       return res.status(401).json({ message: "Authentication required" })
     }
 
     const author = req.user.id
-
+*/
     const newArticle = await Article.create({
       title,
       content,
@@ -63,19 +63,20 @@ const getArticleById = async (req, res) => {
 
 const deleteArticle = async (req, res) => {
   try {
-    const article = await Article.findById(req.params.id)
+    const { id } = req.params
+    const article = await Article.findById(id)
 
     if (!article) {
       return req.status(404).json({ message: "Article not found" })
     }
-
+    /* Use with the authentication
     if (article.author.toString() !== req.params.id) {
       return res
         .status(403)
         .json({ message: "You can only delete your own articles" })
     }
-
-    await Article.findByIdAndDelete(req.params.id)
+    */
+    await Article.findByIdAndDelete(id)
 
     res.status(200).json({ message: "Article deleted successfully" })
   } catch (err) {
@@ -87,7 +88,7 @@ const updateArticle = async (req, res) => {
   try {
     const { title, content } = req.body
 
-    const article = await Article.findById(req.pqrams.id)
+    const article = await Article.findById(req.params.id)
 
     if (!article) {
       return req.status(404).json({ message: "Article not found" })
