@@ -1,3 +1,4 @@
+const { message } = require("prompt")
 const User = require("../models/userModel")
 const bcrypt = require("bcrypt")
 
@@ -29,10 +30,12 @@ const createUser = async (req, res) => {
     })
 
     return res
-      .status(200)
+      .status(201)
       .json({ success: true, message: "User successfully created" })
   } catch (err) {
     console.error("Error creating user:", err)
-    return res.status(400).json({ success: false, msg: err })
+    return res.status(500).json({ success: false, message: "Server Error" })
   }
 }
+
+module.exports = { createUser }
