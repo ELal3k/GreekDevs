@@ -38,4 +38,47 @@ const createUser = async (req, res) => {
   }
 }
 
-module.exports = { createUser }
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "All fields are required" })
+    }
+
+    const user = await User.findOne({ email })
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" })
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid credentials" })
+    }
+
+    return res.status(200).json({ success: true, message: "Login successful" })
+  } catch (err) {
+    console.error("Error logging in user:", err)
+    return res.status(500).json({ success: false, message: "Server error" })
+  }
+}
+
+const getUserData = async (req, res) => {
+  try {
+    const { userId } = req.params
+
+    const user = await User.findById(userId).select("-password")
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" })
+    }
+
+    return res.status(200).json({ success: true, user })
+  } catch (err) {
+    console.error("Error fetching user data:", err)
+    return res.status(500).json({ success: false, message: "Server error" })
+  }
+}
+module.exports = { createUser, loginUser, getUserData }

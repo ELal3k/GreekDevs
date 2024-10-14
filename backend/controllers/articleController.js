@@ -21,7 +21,7 @@ const createArticle = async (req, res) => {
       author,
     })
 
-    await newArticle.populate("author", "username")
+    await newArticle.populate("author", "-password")
 
     res.status(201).json(newArticle)
   } catch (err) {
