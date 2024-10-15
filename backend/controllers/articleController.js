@@ -76,23 +76,35 @@ const getArticleById = async (req, res) => {
 const deleteArticle = async (req, res) => {
   try {
     const { id } = req.params
+
+    if (!req.user || !req.user.userId) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Authentication required" })
+    }
+
     const article = await Article.findById(id)
 
     if (!article) {
-      return req.status(404).json({ message: "Article not found" })
+      return req
+        .status(404)
+        .json({ success: false, message: "Article not found" })
     }
-    /* Use with the authentication
-    if (article.author.toString() !== req.params.id) {
+
+    const author = req.user.userId
+
+    if (article.author.toString() !== author) {
       return res
         .status(403)
-        .json({ message: "You can only delete your own articles" })
+        .json({ success: false, message: "You can only delete your articles" })
     }
-    */
     await Article.findByIdAndDelete(id)
 
-    res.status(200).json({ message: "Article deleted successfully" })
+    res
+      .status(200)
+      .json({ success: true, message: "Article deleted successfully" })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ success: false, message: err.message })
   }
 }
 
