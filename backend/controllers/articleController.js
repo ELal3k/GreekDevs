@@ -111,25 +111,37 @@ const deleteArticle = async (req, res) => {
 const updateArticle = async (req, res) => {
   try {
     const { title, content } = req.body
+    const { id } = req.params
 
-    const article = await Article.findById(req.params.id)
-
-    if (!article) {
-      return req.status(404).json({ message: "Article not found" })
+    if (!req.user || !req.user.userId) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Authentication required" })
     }
 
-    if (article.author.toString() !== req.params.id) {
-      return res
-        .status(403)
-        .json({ message: "You can only delete your own articles" })
+    const article = await Article.findById(id)
+
+    if (!article) {
+      return req
+        .status(404)
+        .json({ success: false, message: "Article not found" })
+    }
+
+    const author = req.user.userId
+
+    if (article.author.toString() !== author) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only update your own articles",
+      })
     }
 
     const updatedArticle = await Article.findByIdAndUpdate(
-      req.params.id,
+      id,
       {
         title,
         content,
-        updatedAt: Date.now,
+        updatedAt: Date.now(),
       },
       {
         new: true,
@@ -137,7 +149,11 @@ const updateArticle = async (req, res) => {
       }
     ).populate("author", "username")
 
-    res.status(200).json(updatedArticle)
+    res.status(200).json({
+      success: true,
+      message: "Article updated successfully",
+      article: updatedArticle,
+    })
   } catch (err) {
     res.status(400).json({ message: err.message })
   }
