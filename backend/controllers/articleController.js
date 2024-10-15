@@ -7,14 +7,22 @@ const truncateContent = (content, maxLength = 100) => {
 
 const createArticle = async (req, res) => {
   try {
-    const { title, content, author } = req.body
-    /* Use with the authentication
-    if (!req.user || !req.user.id) {
-      return res.status(401).json({ message: "Authentication required" })
+    const { title, content } = req.body
+
+    if (!req.user || !req.user.userId) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Authentication required" })
     }
 
-    const author = req.user.id
-*/
+    const author = req.user.userId
+
+    if (!title || !content) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Title and content are required" })
+    }
+
     const newArticle = await Article.create({
       title,
       content,
@@ -23,7 +31,11 @@ const createArticle = async (req, res) => {
 
     await newArticle.populate("author", "-password")
 
-    res.status(201).json(newArticle)
+    res.status(201).json({
+      success: true,
+      message: "Article created successfully",
+      article: newArticle,
+    })
   } catch (err) {
     res.status(400).json({ message: err.message })
   }
