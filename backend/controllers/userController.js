@@ -1,6 +1,6 @@
-const { message } = require("prompt")
 const User = require("../models/userModel")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const createUser = async (req, res) => {
   try {
@@ -58,7 +58,18 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" })
     }
 
-    return res.status(200).json({ success: true, message: "Login successful" })
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "30h" }
+    )
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Login successful", token })
   } catch (err) {
     console.error("Error logging in user:", err)
     return res.status(500).json({ success: false, message: "Server error" })

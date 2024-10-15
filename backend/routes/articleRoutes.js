@@ -8,13 +8,16 @@ const {
   getArticlesByAuthor,
 } = require("../controllers/articleController")
 
+const verifyToken = require("../middleware/auth")
+
 const router = express.Router()
 
-router.post("/post", createArticle)
 router.get("/get", getAllArticles)
 router.get("/get/:id", getArticleById)
 router.get("/author/:authorId", getArticlesByAuthor)
-router.delete("/delete/:id", deleteArticle)
-router.put("/update/:id", updateArticle)
+
+router.post("/post", verifyToken, createArticle)
+router.delete("/delete/:id", verifyToken, deleteArticle)
+router.put("/update/:id", verifyToken, updateArticle)
 
 module.exports = router
