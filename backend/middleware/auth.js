@@ -6,7 +6,7 @@ const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return req
+    return res
       .status(401)
       .json({ success: false, message: "No token provided" })
   }
@@ -26,7 +26,7 @@ const verifyToken = (req, res, next) => {
       return res.status(401).json({ success: false, message: "Invalid token" })
     }
 
-    return req
+    return res
       .status(500)
       .json({ success: false, message: "Internal server error" })
   }
