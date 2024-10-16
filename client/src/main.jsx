@@ -10,7 +10,7 @@ import CreateArticle from "./pages/createARticlePage.jsx"
 import ArticlePage from "./pages/articlePage.jsx"
 import AuthorArticlesPage from "./pages/authorArticlesPage.jsx"
 import EditArticlePage from "./pages/editArticlePage.jsx"
-import UserRegistrationPage from "./pages/userRegistrationPage.jsx"
+import RegisterPage from "./pages/registerPage.jsx"
 
 const router = createBrowserRouter([
   {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/signup",
-        element: <UserRegistrationPage />,
+        element: <RegisterPage />,
       },
     ],
   },
