@@ -10,6 +10,8 @@ import CreateArticle from "./pages/createARticlePage.jsx"
 import ArticlePage from "./pages/articlePage.jsx"
 import AuthorArticlesPage from "./pages/authorArticlesPage.jsx"
 import EditArticlePage from "./pages/editArticlePage.jsx"
+import UserRegistrationPage from "./pages/userRegistrationPage.jsx"
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/author_articles/edit/:id",
         element: <EditArticlePage />,
+      },
+      {
+        path: "/signup",
+        element: <UserRegistrationPage />,
       },
     ],
   },

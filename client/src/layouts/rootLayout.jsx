@@ -12,12 +12,12 @@ export default function RootLayout() {
             <ul className="flex space-x-4">
               <li>
                 <NavLink
-                  to="/author_articles"
+                  to="/signup"
                   className={({ isActive }) =>
                     isActive ? "text-blue-400" : "hover:text-blue-400"
                   }
                 >
-                  My Articles
+                  Sign Up
                 </NavLink>
               </li>
             </ul>
