@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import axios from "axios"
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 import { Eye, EyeOff } from "lucide-react"
 
 export default function RegisterPage() {
@@ -17,8 +17,26 @@ export default function RegisterPage() {
 
   const password = watch("password")
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async (data) => {
+    try {
+      console.log(
+        "API URL:",
+        `${import.meta.env.VITE_API_BASE_URL}/users/register`
+      )
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/users/register`,
+        {
+          username: data.username,
+          email: data.email,
+          password: data.password,
+        }
+      )
+      res.data.success
+        ? alert("Registration successful!")
+        : alert("Registration failed. Please try again.")
+    } catch (err) {
+      alert(err.res?.data?.message || "An error occurred during registration")
+    }
   }
 
   return (

@@ -30,7 +30,6 @@ export default function CreateArticle() {
     }
   }
 
-  console.log(content)
   return (
     <div className="bg-white shadow rounded-lg p-6">
       <h1 className="text-3xl font-bold mb-6">Create New Article</h1>

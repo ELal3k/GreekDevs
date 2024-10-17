@@ -27,6 +27,8 @@ const getAllArticles = async (req, res) => {
 ## TBD
 
 - Build markdown hook for markdown &harr; HTML
+- Register User error handling(email and username exist in the DB)
+- Toastify messages at registration
 
 ```mermaid
 graph TD
