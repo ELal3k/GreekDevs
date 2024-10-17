@@ -15,6 +15,7 @@ export default function HomePage() {
         `${import.meta.env.VITE_API_BASE_URL}/articles/get`
       )
       setArticles(response.data)
+      console.log(response)
     } catch (err) {
       console.error("Failed to fetch articles", err)
       setError("Failed to fetch articles. Please try again later.")
@@ -40,7 +41,11 @@ export default function HomePage() {
       <div className="space-y-6">
         {articles.map((article) => (
           <div key={article._id} className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-2">{article.title}</h2>
+            <div className="flex gap-4 items-center mb-2">
+              <h2 className="text-xl font-semibold">{article.title}</h2>
+              <i className="font-thin">Posted by {article.author.username}</i>
+            </div>
+
             <div
               className="prose prose-slate max-w-none mb-4"
               dangerouslySetInnerHTML={renderContent(

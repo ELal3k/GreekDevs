@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import MarkdownIt from "markdown-it"
 import DOMPurify from "dompurify"
 
-export default function HomePage() {
+export default function Dashboard() {
   const [articles, setArticles] = useState([])
   const [error, setError] = useState(null)
 
