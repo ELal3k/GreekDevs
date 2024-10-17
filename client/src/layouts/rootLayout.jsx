@@ -20,6 +20,16 @@ export default function RootLayout() {
                   Sign Up
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive ? "text-blue-400" : "hover:text-blue-400"
+                  }
+                >
+                  Log In
+                </NavLink>
+              </li>
             </ul>
           </nav>
         </div>

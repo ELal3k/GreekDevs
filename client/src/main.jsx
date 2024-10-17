@@ -11,6 +11,7 @@ import ArticlePage from "./pages/articlePage.jsx"
 import AuthorArticlesPage from "./pages/authorArticlesPage.jsx"
 import EditArticlePage from "./pages/editArticlePage.jsx"
 import RegisterPage from "./pages/registerPage.jsx"
+import LoginPage from "./pages/loginPage.jsx"
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
         element: <ArticlePage />,
       },
       {
-        path: "/author_articles",
+        path: "/dashboard",
         element: <AuthorArticlesPage />,
       },
       {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <RegisterPage />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
       },
     ],
   },
