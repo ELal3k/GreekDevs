@@ -30,7 +30,9 @@ export default function LoginPage() {
         alert("Login failed. Please check your credentials.")
       }
     } catch (err) {
-      alert(err.res?.data?.message || "An error occurred during login")
+      err.response.status === 401
+        ? alert("Wrong password")
+        : alert("An error occurred during login")
     }
   }
 

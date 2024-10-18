@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import DOMPurify from "dompurify"
 import { modules, formats } from "../utils/quillConfig"
 import "highlight.js/styles/github.css"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 export default function ArticleCreationForm() {
   const [title, setTitle] = useState("")
@@ -15,16 +17,40 @@ export default function ArticleCreationForm() {
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value)
-    console.log(title)
   }
 
   const handleContentChange = (value) => {
     setContent(value)
-    console.log(content)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setError("")
+
+    const sanitizedContent = DOMPurify.sanitize(content)
+
+    try {
+      const token = localStorage.getItem("token")
+
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/articles/post`,
+        {
+          title: title,
+          content: sanitizedContent,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      console.log(res)
+    } catch (err) {
+      err.response?.status === 401
+        ? setError("You must be logged in to post an article")
+        : setError("An error occurred while creating the article")
+    }
   }
   return (
     <div className="max-w-2xl mx-auto mt-10">
