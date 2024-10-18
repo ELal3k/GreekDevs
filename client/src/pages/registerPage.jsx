@@ -93,35 +93,38 @@ export default function RegisterPage() {
         </div>
 
         {/* ------------------- PASSWORD ----------------------- */}
-        <div className="mb-4 relative">
+        <div className="mb-4">
           <label htmlFor="password" className="block mb-1">
             Password
           </label>
-          <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            placeholder="Password"
-            {...register("password", {
-              required: "Password is required",
-              pattern: {
-                value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&*])(?=.{8,})/,
-                message:
-                  "Password should be 8+ characters long and include uppercase, lowercase, number & special character",
-              },
-            })}
-            className="w-full px-3 py-2 border rounded-md"
-          />
-          <div
-            className="absolute bottom-[10px] right-3 flex items-center cursor-pointer"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? (
-              <EyeOff strokeWidth={0.7} />
-            ) : (
-              <Eye strokeWidth={0.7} />
-            )}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Password"
+              {...register("password", {
+                required: "Password is required",
+                pattern: {
+                  value:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&*])(?=.{8,})/,
+                  message:
+                    "Password should be 8+ characters long and include uppercase, lowercase, number & special character",
+                },
+              })}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            <div
+              className="absolute bottom-[10px] right-3 flex items-center cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeOff strokeWidth={0.7} />
+              ) : (
+                <Eye strokeWidth={0.7} />
+              )}
+            </div>
           </div>
+
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">
               {errors.password.message}
@@ -130,31 +133,34 @@ export default function RegisterPage() {
         </div>
 
         {/* ------------------- CONFIRM PASSWORD ----------------------- */}
-        <div className="mb-4 relative">
+        <div className="mb-4">
           <label htmlFor="confirmPassword" className="block mb-1">
             Confirm password
           </label>
-          <input
-            type={showConfirmPassword ? "text" : "password"}
-            id="confirmPassword"
-            placeholder="Confirm your password"
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "The passwords do not match",
-            })}
-            className="w-full px-3 py-2 border rounded-md"
-          />
-          <div
-            className="absolute bottom-[10px] right-3 flex items-center cursor-pointer"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-          >
-            {showConfirmPassword ? (
-              <EyeOff strokeWidth={0.7} />
-            ) : (
-              <Eye strokeWidth={0.7} />
-            )}
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              placeholder="Confirm your password"
+              {...register("confirmPassword", {
+                required: "Please confirm your password",
+                validate: (value) =>
+                  value === password || "The passwords do not match",
+              })}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            <div
+              className="absolute bottom-[10px] right-3 flex items-center cursor-pointer"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? (
+                <EyeOff strokeWidth={0.7} />
+              ) : (
+                <Eye strokeWidth={0.7} />
+              )}
+            </div>
           </div>
+
           {errors.confirmPassword && (
             <p className="text-red-500 text-sm mt-1">
               {errors.confirmPassword.message}
