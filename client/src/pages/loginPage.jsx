@@ -67,25 +67,28 @@ export default function LoginPage() {
           <label htmlFor="password" className="block mb-1">
             Password
           </label>
-          <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            placeholder="Password"
-            {...register("password", {
-              required: "Password is required",
-            })}
-            className="w-full px-3 py-2 border rounded-md"
-          />
-          <div
-            className="absolute bottom-[10px] right-3 flex items-center cursor-pointer"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? (
-              <EyeOff strokeWidth={0.7} />
-            ) : (
-              <Eye strokeWidth={0.7} />
-            )}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Password"
+              {...register("password", {
+                required: "Password is required",
+              })}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            <div
+              className="absolute bottom-[10px] right-3 flex items-center cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeOff strokeWidth={0.7} />
+              ) : (
+                <Eye strokeWidth={0.7} />
+              )}
+            </div>
           </div>
+
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">
               {errors.password.message}
