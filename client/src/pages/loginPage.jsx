@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Eye, EyeOff } from "lucide-react"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -25,19 +27,33 @@ export default function LoginPage() {
       )
       if (res.data.token) {
         localStorage.setItem("token", res.data.token)
-        navigate("/dashboard")
+        toast.success("Welcome!")
+        setTimeout(() => {
+          navigate("/dashboard")
+        }, 3000)
       } else {
-        alert("Login failed. Please check your credentials.")
+        toast.error("An error occurred during login")
       }
     } catch (err) {
       err.response.status === 401
-        ? alert("Wrong password")
-        : alert("An error occurred during login")
+        ? toast.error("Wrong password")
+        : toast.error("An error occurred during login")
     }
   }
 
   return (
     <div className="max-w-md mx-auto mt-10">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <h2 className="text-2xl font-bold mb-5">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* EMAIL */}
