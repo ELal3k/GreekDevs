@@ -5,9 +5,11 @@ import "./index.css"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import RootLayout from "./layouts/rootLayout.jsx"
 import ErrorPage from "./pages/errorPage.jsx"
+
 import HomePage from "./pages/homePage.jsx"
 import RegisterPage from "./pages/registerPage.jsx"
 import LoginPage from "./pages/loginPage.jsx"
+import ArticleCreationForm from "./pages/articleCreationForm.jsx"
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/create-article",
+        element: <ArticleCreationForm />,
       },
     ],
   },

@@ -1,5 +1,3 @@
-// src/config/quillConfig.js
-
 import hljs from "highlight.js"
 
 const modules = {
