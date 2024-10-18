@@ -10,6 +10,7 @@ import HomePage from "./pages/homePage.jsx"
 import RegisterPage from "./pages/registerPage.jsx"
 import LoginPage from "./pages/loginPage.jsx"
 import ArticleCreationForm from "./pages/articleCreationForm.jsx"
+import Dashboard from "./pages/dashboard.jsx"
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
       {
         path: "/create-article",

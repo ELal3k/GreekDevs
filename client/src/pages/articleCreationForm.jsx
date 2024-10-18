@@ -12,7 +12,6 @@ import "react-toastify/dist/ReactToastify.css"
 export default function ArticleCreationForm() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
-  const [error, setError] = useState("")
   const navigate = useNavigate()
 
   const handleTitleChange = (e) => {
@@ -25,12 +24,14 @@ export default function ArticleCreationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError("")
-
     const sanitizedContent = DOMPurify.sanitize(content)
 
     try {
       const token = localStorage.getItem("token")
+
+      if (!token) {
+        toast.error("Please log in to create an article!")
+      }
 
       const res = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/articles/post`,
@@ -45,15 +46,30 @@ export default function ArticleCreationForm() {
         }
       )
 
-      console.log(res)
+      if (res.data.success) {
+        toast.success(res.data.message || "Article created successfully!")
+        navigate("/dashboard")
+      }
     } catch (err) {
-      err.response?.status === 401
-        ? setError("You must be logged in to post an article")
-        : setError("An error occurred while creating the article")
+      if (err.response?.data?.message === "Token expired") {
+        toast.error(err.response.data.message)
+      }
     }
   }
   return (
     <div className="max-w-2xl mx-auto mt-10">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <h2 className="text-2xl font-bold mb-5">Create New Article</h2>
 
       <form onSubmit={handleSubmit}>
@@ -80,8 +96,6 @@ export default function ArticleCreationForm() {
             modules={modules}
             formats={formats}
           />
-
-          {error && <p className="text-red-500 text-sm mt-1 mb-4">{error}</p>}
         </div>
 
         <button
