@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form"
 import axios from "axios"
 // import { Link } from "react-router-dom"
 import { Eye, EyeOff } from "lucide-react"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -32,15 +34,28 @@ export default function RegisterPage() {
         }
       )
       res.data.success
-        ? alert("Registration successful!")
-        : alert("Registration failed. Please try again.")
+        ? toast.success("Registration successful!")
+        : toast.error("Registration failed. Please try again.")
     } catch (err) {
-      alert(err.res?.data?.message || "An error occurred during registration")
+      toast.error(
+        err.response?.data?.message || "An error occurred during registration"
+      )
     }
   }
 
   return (
     <div className="max-w-md mx-auto mt-10">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <h2 className="text-2xl font-bold mb-5">Sign Up</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/*------------- USERNAME --------------*/}
