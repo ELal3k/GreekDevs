@@ -4,11 +4,13 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Eye, EyeOff } from "lucide-react"
 import { toast, ToastContainer } from "react-toastify"
+import { useAuth } from "../auth/useAuth"
 import "react-toastify/dist/ReactToastify.css"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const {
     register,
@@ -26,7 +28,7 @@ export default function LoginPage() {
         }
       )
       if (res.data.token) {
-        localStorage.setItem("token", res.data.token)
+        login(res.data.token)
         toast.success("Welcome!")
         setTimeout(() => {
           navigate("/dashboard")

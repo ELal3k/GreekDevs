@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client"
 import "./index.css"
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { AuthProvider } from "./auth/authContext.jsx"
 import RootLayout from "./layouts/rootLayout.jsx"
 import ErrorPage from "./pages/errorPage.jsx"
 
@@ -44,6 +45,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 )
