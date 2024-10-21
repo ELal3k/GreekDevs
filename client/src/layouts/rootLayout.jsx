@@ -1,6 +1,14 @@
-import { NavLink, Outlet } from "react-router-dom"
+import { NavLink, Outlet, useNavigate } from "react-router-dom"
+import { useAuth } from "../auth/useAuth"
 
 export default function RootLayout() {
+  const { isAuthenticated, logout } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate("/")
+  }
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-slate-800 text-white p-4">
@@ -10,26 +18,53 @@ export default function RootLayout() {
           </NavLink>
           <nav>
             <ul className="flex space-x-4">
-              <li>
-                <NavLink
-                  to="/signup"
-                  className={({ isActive }) =>
-                    isActive ? "text-blue-400" : "hover:text-blue-400"
-                  }
-                >
-                  Sign Up
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/login"
-                  className={({ isActive }) =>
-                    isActive ? "text-blue-400" : "hover:text-blue-400"
-                  }
-                >
-                  Log In
-                </NavLink>
-              </li>
+              {isAuthenticated ? (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard"
+                      className={({ isActive }) =>
+                        isActive ? "text-blue-400" : "hover:text-blue-400"
+                      }
+                    >
+                      Dashboard
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="hover:text-blue-400"
+                    >
+                      Log out
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    {" "}
+                    <NavLink
+                      to="/signup"
+                      className={({ isActive }) =>
+                        isActive ? "text-blue-400" : "hover:text-blue-400"
+                      }
+                    >
+                      Sign Up
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink
+                      to="/login"
+                      className={({ isActive }) =>
+                        isActive ? "text-blue-400" : "hover:text-blue-400"
+                      }
+                    >
+                      Log In
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </nav>
         </div>
