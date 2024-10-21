@@ -12,6 +12,7 @@ import RegisterPage from "./pages/registerPage.jsx"
 import LoginPage from "./pages/loginPage.jsx"
 import ArticleCreationForm from "./pages/articleCreationForm.jsx"
 import Dashboard from "./pages/dashboard.jsx"
+import ProtectedRoute from "./components/protectedRoute.jsx"
 
 const router = createBrowserRouter([
   {
@@ -32,12 +33,17 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "/dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "/create-article",
-        element: <ArticleCreationForm />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <Dashboard />,
+          },
+          {
+            path: "/create-article",
+            element: <ArticleCreationForm />,
+          },
+        ],
       },
     ],
   },

@@ -1,14 +1,15 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState } from "react"
 
 export const AuthContext = createContext()
 
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setisAuthenticated] = useState(false)
+function initializeCount() {
+  const token = localStorage.getItem("token")
+  const booleanToken = !!token
+  return booleanToken
+}
 
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    setisAuthenticated(!!token)
-  }, [])
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setisAuthenticated] = useState(initializeCount)
 
   const login = (token) => {
     localStorage.setItem("token", token)
