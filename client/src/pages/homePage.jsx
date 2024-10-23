@@ -1,31 +1,27 @@
-import { useState, useEffect } from "react"
-import axios from "axios"
-import { Link } from "react-router-dom"
+import { useEffect } from "react"
+import useApi from "../hooks/useApi"
 
 export default function HomePage() {
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const { data: articles, isLoading, error, get } = useApi()
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/articles/get`
-        )
-        console.log(res.data)
+        await get("/articles/get")
       } catch (err) {
         console.log(err)
-        setError("Failed to fetch articles.Please try again later.")
-        setLoading(false)
       }
     }
 
     fetchArticles()
-  }, [])
+  }, [get])
+
+  if (isLoading)
+    return <div className="text-center mt-8 text-blue-700">Loading....</div>
+
+  if (error) return <div className="text-center mt-8 text-red-600">{error}</div>
+
   return (
-    <>
-      {articles.length !== 0 ? <p>i have articles</p> : <div>OH so empty</div>}
-    </>
+    <>{articles ? <div>Articles Found</div> : <div>Articles not found</div>}</>
   )
 }
