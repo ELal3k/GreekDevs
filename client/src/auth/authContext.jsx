@@ -1,5 +1,6 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { jwtDecode } from "jwt-decode"
+import useApi from "../hooks/useApi"
 
 export const AuthContext = createContext()
 
@@ -11,6 +12,26 @@ function isToken() {
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setisAuthenticated] = useState(isToken)
+  const { response: user, isLoading, error, fetchData } = useApi()
+
+  const decodeToken = () => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      return null
+    }
+
+    return jwtDecode(token)
+  }
+
+  const fetchUserData = async () => {
+    const decoded = decodeToken()
+    if (!decoded) return
+
+    fetchData({
+      url: `/users/${decoded.userId}`,
+      method: "GET",
+    })
+  }
 
   const login = (token) => {
     localStorage.setItem("token", token)
@@ -22,19 +43,25 @@ export const AuthProvider = ({ children }) => {
     setisAuthenticated(false)
   }
 
-  const decodeToken = () => {
-    const token = localStorage.getItem("token")
-    if (!token) {
-      console.log("no token found")
-      return null
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchUserData()
     }
-    const decoded = jwtDecode(token)
-    return decoded
-  }
+  }, [isAuthenticated])
+
+  console.log("CONTEXT RUNNING")
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login, logout, decodeToken }}
+      value={{
+        isAuthenticated,
+        login,
+        logout,
+        decodeToken,
+        user,
+        isLoading,
+        error,
+      }}
     >
       {children}
     </AuthContext.Provider>

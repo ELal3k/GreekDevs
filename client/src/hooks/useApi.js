@@ -1,37 +1,37 @@
-import { useState, useCallback } from "react"
+import { useState } from "react"
 import axios from "axios"
 
 const useApi = () => {
-  const [data, setData] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [response, setResponse] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
   const [error, setError] = useState(null)
 
-  const get = useCallback(async (url) => {
-    setIsLoading(true)
+  const axiosInstance = axios.create({
+    baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+  })
+
+  const fetchData = async ({ url, method, data = {}, params = {} }) => {
     setError(null)
-    setData(null)
-
+    setIsLoading(true)
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}${url}`)
-      setData(res.data)
+      const res = await axiosInstance({
+        url,
+        method,
+        data,
+        params,
+      })
 
-      if (Array.isArray(res.data) && res.data.length === 0) {
-        throw new Error("EMPTY_ARRAY")
-      }
-    } catch (error) {
-      if (error.message === "Network Error") {
-        setError("Network Error")
-      }
-
-      if (error.message === "EMPTY_ARRAY") {
-        setError("Ooohh so empty....")
-      }
+      setResponse(res.data)
+    } catch (err) {
+      console.log(err.message)
+      setError(err.response ? err.response.data : err.message)
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }
 
-  return { data, isLoading, error, get }
+  return { response, isLoading, error, fetchData }
 }
 
 export default useApi
