@@ -49,8 +49,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, [isAuthenticated])
 
-  console.log("CONTEXT RUNNING")
-
   return (
     <AuthContext.Provider
       value={{

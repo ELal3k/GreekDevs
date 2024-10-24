@@ -2,13 +2,14 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../auth/useAuth"
 
 export default function RootLayout() {
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated, logout, user } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = () => {
     logout()
     navigate("/")
   }
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-slate-800 text-white p-4">
@@ -19,7 +20,7 @@ export default function RootLayout() {
           <nav>
             <ul className="flex space-x-4">
               {isAuthenticated ? (
-                <>
+                <div className="flex items-center gap-4">
                   <li>
                     <NavLink
                       to="/dashboard"
@@ -38,7 +39,12 @@ export default function RootLayout() {
                       Log out
                     </button>
                   </li>
-                </>
+                  <li>
+                    <div className=" bg-blue-500 font-extrabold text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center">
+                      {user.username.substring(0, 1)}
+                    </div>
+                  </li>
+                </div>
               ) : (
                 <>
                   <li>
