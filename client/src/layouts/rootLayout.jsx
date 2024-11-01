@@ -10,6 +10,8 @@ export default function RootLayout() {
     navigate("/")
   }
 
+  console.log("USER", user)
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-slate-800 text-white p-4">
@@ -40,9 +42,11 @@ export default function RootLayout() {
                     </button>
                   </li>
                   <li>
-                    <div className=" bg-blue-500 font-extrabold text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center">
-                      {user.username.substring(0, 1)}
-                    </div>
+                    {
+                      <div className=" bg-blue-500 font-extrabold text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center">
+                        {user.username.substring(0, 1)}
+                      </div>
+                    }
                   </li>
                 </div>
               ) : (
