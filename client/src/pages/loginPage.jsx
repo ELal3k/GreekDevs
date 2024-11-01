@@ -29,15 +29,10 @@ export default function LoginPage() {
       )
       if (res.data.token) {
         login(res.data.token)
-        await toast.promise(
-          new Promise((resolve) => setTimeout(resolve, 1500)), // Give time for the toast to be visible
-          {
-            pending: "Logging in...",
-            success: "Welcome! Redirecting to dashboard...",
-            error: "An error occurred during login",
-          }
-        )
-        navigate("/dashboard")
+        toast.success("Welcome!", {
+          autoClose: 1500,
+          onClose: () => navigate("/dashboard"),
+        })
       } else {
         toast.error("An error occurred during login")
       }

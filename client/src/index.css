@@ -51,3 +51,75 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
+.prose p {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+  color: hsl(0deg 10% 14%);
+}
+
+.prose h1 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.625rem;
+}
+.prose h2 {
+  margin-top: 3rem;
+  margin-bottom: 0.625rem;
+}
+
+.prose hr {
+  margin: 0;
+}
+
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:first-of-type::after {
+  content: none;
+}
+
+.prose pre {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  padding: 0;
+  border-radius: 0;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+  line-height: 1.7142857;
+  white-space: pre;
+  display: block;
+}
+
+.prose pre[data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+}
+
+.prose pre {
+  border: 1px solid #374151;
+}
+
+.prose :not(pre) > code {
+  background-color: #f3f4f6;
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  font-size: 85%;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
+    Liberation Mono, monospace;
+  font-weight: 100;
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
