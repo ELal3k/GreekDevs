@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.15",
+    "@tiptap/pm": "^2.9.1",
+    "@tiptap/react": "^2.9.1",
+    "@tiptap/starter-kit": "^2.9.1",
     "axios": "^1.7.7",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.453.0",
