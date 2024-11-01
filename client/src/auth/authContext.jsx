@@ -13,6 +13,7 @@ function isToken() {
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setisAuthenticated] = useState(isToken)
   const { response: user, isLoading, error, fetchData } = useApi()
+  const [isInitialized, setIsInitialized] = useState(false)
 
   const decodeToken = () => {
     const token = localStorage.getItem("token")
@@ -25,12 +26,18 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserData = async () => {
     const decoded = decodeToken()
-    if (!decoded) return
-
-    fetchData({
-      url: `/users/${decoded.userId}`,
-      method: "GET",
-    })
+    if (!decoded) {
+      setIsInitialized(true)
+      return
+    }
+    try {
+      await fetchData({
+        url: `/users/${decoded.userId}`,
+        method: "GET",
+      })
+    } finally {
+      setIsInitialized(true)
+    }
   }
 
   const login = (token) => {
@@ -48,6 +55,10 @@ export const AuthProvider = ({ children }) => {
       fetchUserData()
     }
   }, [isAuthenticated])
+
+  if (!isInitialized) {
+    return null
+  }
 
   return (
     <AuthContext.Provider

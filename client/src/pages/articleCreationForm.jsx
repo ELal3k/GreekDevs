@@ -1,7 +1,8 @@
+import TipTapEditor from "../components/TipTap/tiptapEditor"
 export default function ArticleCreationForm() {
   return (
     <>
-      <div>Create article</div>
+      <TipTapEditor />
     </>
   )
 }
