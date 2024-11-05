@@ -1,4 +1,3 @@
-import { useState } from "react"
 import Highlight from "@tiptap/extension-highlight"
 import Typography from "@tiptap/extension-typography"
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
@@ -11,9 +10,7 @@ import "highlight.js/styles/github-dark-dimmed.css"
 
 const lowlight = createLowlight(common)
 
-export default function TipTapEditor() {
-  const [content, setContent] = useState("")
-
+export default function TipTapEditor({ onUpdate }) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -33,10 +30,11 @@ export default function TipTapEditor() {
     },
 
     onUpdate: ({ editor }) => {
-      setContent(editor.getHTML())
+      const json = editor.getJSON()
+      onUpdate?.(json)
     },
   })
-  console.log(content)
+
   return (
     <div className="w-full max-w-4xl mx-auto space-y-4 mt-10">
       <div className="border rounded-lg">
