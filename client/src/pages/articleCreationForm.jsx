@@ -8,31 +8,11 @@ import { useNavigate } from "react-router-dom"
 export default function ArticleCreationForm() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState(null)
-  const { fetchData, isLoading, error, response } = useApi()
+  const { fetchData, isLoading } = useApi()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    try {
-      await fetchData({
-        url: "/articles/post",
-        method: "POST",
-        data: {
-          title,
-          content,
-        },
-      })
-
-      if (response) {
-        toast.success("Article created successfully!", {
-          autoClose: 1500,
-          onClose: () => navigate("/"),
-        })
-      }
-    } catch (err) {
-      console.log("Error creating article", err)
-    }
 
     if (!title.trim()) {
       toast.error("Title is required")
@@ -42,6 +22,28 @@ export default function ArticleCreationForm() {
     if (!content) {
       toast.error("Some content is required")
       return
+    }
+
+    try {
+      const res = await fetchData({
+        url: "/articles/post",
+        method: "POST",
+        data: {
+          title: title.trim(),
+          content,
+        },
+      })
+
+      if (res) {
+        console.log(res)
+        toast.success("Article created successfully!", {
+          autoClose: 1500,
+          onClose: () => navigate("/"),
+        })
+      }
+    } catch (err) {
+      console.log("Error creating article", err)
+      toast.error(err.response?.data?.message || "Failed to create article")
     }
   }
 
@@ -75,16 +77,19 @@ export default function ArticleCreationForm() {
             onChange={(e) => setTitle(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter article title"
+            disabled={isLoading}
           />
         </div>
         <TipTapEditor
           onUpdate={(newContent) => {
             setContent(newContent)
           }}
+          disabled={isLoading}
         />
 
         <button
           type="submit"
+          disabled={isLoading}
           className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Create Article

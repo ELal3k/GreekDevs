@@ -12,7 +12,7 @@ function isToken() {
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setisAuthenticated] = useState(isToken)
-  const { response: user, isLoading, error, fetchData } = useApi()
+  const { response: user, isLoading, fetchData } = useApi()
   const [isInitialized, setIsInitialized] = useState(false)
 
   const decodeToken = () => {
@@ -69,7 +69,6 @@ export const AuthProvider = ({ children }) => {
         decodeToken,
         user,
         isLoading,
-        error,
       }}
     >
       {children}

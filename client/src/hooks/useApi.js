@@ -3,9 +3,7 @@ import axios from "axios"
 
 const useApi = () => {
   const [response, setResponse] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-
-  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const axiosInstance = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
@@ -14,7 +12,6 @@ const useApi = () => {
   axiosInstance.interceptors.request.use((config) => {
     const token = localStorage.getItem("token")
 
-    console.log(token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -22,7 +19,6 @@ const useApi = () => {
   })
 
   const fetchData = async ({ url, method, data = {}, params = {} }) => {
-    setError(null)
     setIsLoading(true)
     try {
       const res = await axiosInstance({
@@ -33,15 +29,16 @@ const useApi = () => {
       })
 
       setResponse(res.data)
+      return res.data
     } catch (err) {
       console.log(err.message)
-      setError(err.response ? err.response.data : err.message)
+      throw err
     } finally {
       setIsLoading(false)
     }
   }
 
-  return { response, isLoading, error, fetchData }
+  return { response, isLoading, fetchData }
 }
 
 export default useApi
