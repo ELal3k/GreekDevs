@@ -30,17 +30,6 @@ const getAllArticles = async (req, res) => {
 - Register User error handling(email and username exist in the DB)
 - Toastify messages at registration
 
-```mermaid
-graph TD
-A[User Input] -->|Quill.js| B[Rich Text HTML]
-B -->|Turndown| C[Markdown]
-C -->|Store| D[Database]
-D -->|Fetch| E[Markdown]
-E -->|markdown-it| F[HTML for Display]
-F -->|DOMPurify| G[Sanitized HTML]
-G -->|Render| H[Web Page]
-```
-
 ## Authentication flow
 
 ```mermaid

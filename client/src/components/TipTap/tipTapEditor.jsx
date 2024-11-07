@@ -30,8 +30,8 @@ export default function TipTapEditor({ onUpdate }) {
     },
 
     onUpdate: ({ editor }) => {
-      const json = editor.getJSON()
-      onUpdate?.(json)
+      const html = editor.getHTML()
+      onUpdate?.(html)
     },
   })
 
