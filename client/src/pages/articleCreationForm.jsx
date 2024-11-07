@@ -8,14 +8,31 @@ import { useNavigate } from "react-router-dom"
 export default function ArticleCreationForm() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState(null)
-  const { fetchData, isLoading, error } = useApi()
-
-  const handleEditorUpdate = (newContent) => {
-    setContent(newContent)
-  }
+  const { fetchData, isLoading, error, response } = useApi()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    try {
+      await fetchData({
+        url: "/articles/post",
+        method: "POST",
+        data: {
+          title,
+          content,
+        },
+      })
+
+      if (response) {
+        toast.success("Article created successfully!", {
+          autoClose: 1500,
+          onClose: () => navigate("/"),
+        })
+      }
+    } catch (err) {
+      console.log("Error creating article", err)
+    }
 
     if (!title.trim()) {
       toast.error("Title is required")
@@ -26,9 +43,6 @@ export default function ArticleCreationForm() {
       toast.error("Some content is required")
       return
     }
-
-    console.log(title)
-    console.log(content)
   }
 
   return (
@@ -63,7 +77,11 @@ export default function ArticleCreationForm() {
             placeholder="Enter article title"
           />
         </div>
-        <TipTapEditor onUpdate={handleEditorUpdate} />
+        <TipTapEditor
+          onUpdate={(newContent) => {
+            setContent(newContent)
+          }}
+        />
 
         <button
           type="submit"
