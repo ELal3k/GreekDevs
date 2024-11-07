@@ -15,14 +15,11 @@ export const AuthProvider = ({ children }) => {
   const { response: user, isLoading, fetchData } = useApi()
   const [isInitialized, setIsInitialized] = useState(false)
 
-  const decodeToken = () => {
-    const token = localStorage.getItem("token")
-    if (!token) {
-      return null
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchUserData()
     }
-
-    return jwtDecode(token)
-  }
+  }, [isAuthenticated])
 
   const fetchUserData = async () => {
     const decoded = decodeToken()
@@ -40,6 +37,15 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const decodeToken = () => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      return null
+    }
+
+    return jwtDecode(token)
+  }
+
   const login = (token) => {
     localStorage.setItem("token", token)
     setisAuthenticated(true)
@@ -49,12 +55,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token")
     setisAuthenticated(false)
   }
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchUserData()
-    }
-  }, [isAuthenticated])
 
   if (!isInitialized) {
     return null
