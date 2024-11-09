@@ -2,7 +2,7 @@ import { useAuth } from "../auth/useAuth"
 import { useNavigate } from "react-router-dom"
 
 export default function Dashboard() {
-  const { user, isLoading, error } = useAuth()
+  const { isLoading, error } = useAuth()
   const navigate = useNavigate()
 
   if (isLoading)
@@ -17,7 +17,8 @@ export default function Dashboard() {
         <div className="bg-white shadow rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold">
-              Welcome back, {user.username}!
+              Welcome back,
+              {/* {user.username}! */}
             </h1>
             <button
               onClick={() => {
@@ -33,10 +34,12 @@ export default function Dashboard() {
             <div className="space-y-2">
               <p className="text-gray-600">Profile Information</p>
               <p>
-                <span className="font-medium">Username:</span> {user.username}
+                <span className="font-medium">Username:</span>
+                {/* {user.username} */}
               </p>
               <p>
-                <span className="font-medium">Email:</span> {user.email}
+                <span className="font-medium">Email:</span>
+                {/* {user.email} */}
               </p>
             </div>
 
@@ -44,11 +47,12 @@ export default function Dashboard() {
               <p className="text-gray-600">Account Statistics</p>
               <p>
                 <span className="font-medium">Member since:</span>{" "}
-                {new Date(user.createdAt).toLocaleDateString()}
+                {/* {new Date(user.createdAt).toLocaleDateString()} */}
+                Date
               </p>
               <p>
                 <span className="font-medium">Articles written:</span>{" "}
-                {user.articlesCount || 0}
+                {/* {user.articlesCount || 0} */}
               </p>
             </div>
           </div>

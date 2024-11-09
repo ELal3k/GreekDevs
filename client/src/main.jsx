@@ -13,6 +13,7 @@ import LoginPage from "./pages/loginPage.jsx"
 import ArticleCreationForm from "./pages/articleCreationForm.jsx"
 import Dashboard from "./pages/dashboard.jsx"
 import ProtectedRoute from "./components/protectedRoute.jsx"
+import PublicRoute from "./components/publicRoute.jsx"
 
 const router = createBrowserRouter([
   {
@@ -25,12 +26,17 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/signup",
-        element: <RegisterPage />,
-      },
-      {
-        path: "/login",
-        element: <LoginPage />,
+        element: <PublicRoute />,
+        children: [
+          {
+            path: "/signup",
+            element: <RegisterPage />,
+          },
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+        ],
       },
       {
         element: <ProtectedRoute />,

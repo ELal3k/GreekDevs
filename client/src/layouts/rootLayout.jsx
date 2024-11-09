@@ -2,7 +2,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../auth/useAuth"
 
 export default function RootLayout() {
-  const { isAuthenticated, logout, user } = useAuth()
+  const { isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -41,7 +41,8 @@ export default function RootLayout() {
                   <li>
                     {
                       <div className=" bg-blue-500 font-extrabold text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center">
-                        {user.username.substring(0, 1)}
+                        {/* {user.username.substring(0, 1)} */}
+                        User
                       </div>
                     }
                   </li>
