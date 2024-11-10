@@ -1,16 +1,17 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+
 import { Eye, EyeOff } from "lucide-react"
 import { toast, ToastContainer } from "react-toastify"
 import { useAuth } from "../auth/useAuth"
+import useApi from "../hooks/useApi"
 import "react-toastify/dist/ReactToastify.css"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const navigate = useNavigate()
+
   const { login } = useAuth()
+  const { fetchData } = useApi()
 
   const {
     register,
@@ -20,26 +21,25 @@ export default function LoginPage() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/users/login`,
-        {
+      const res = await fetchData({
+        url: "/users/login",
+        method: "POST",
+        data: {
           email: data.email,
           password: data.password,
-        }
-      )
-      if (res.data.token) {
-        login(res.data.token)
-        toast.success("Welcome!", {
-          autoClose: 1500,
-          onClose: () => navigate("/dashboard"),
+        },
+      })
+
+      if (res.token) {
+        toast.success("Login Successful!", {
+          autoClose: 2000,
         })
-      } else {
-        toast.error("An error occurred during login")
+        setTimeout(() => {
+          login(res.token)
+        }, 2000)
       }
     } catch (err) {
-      err.response.status === 401
-        ? toast.error("Wrong password")
-        : toast.error("An error occurred during login")
+      console.log(err)
     }
   }
 
