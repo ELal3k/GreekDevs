@@ -39,7 +39,20 @@ export default function LoginPage() {
         }, 2000)
       }
     } catch (err) {
-      console.log(err)
+      if (err.response) {
+        switch (err.response.status) {
+          case 401:
+            toast.error(`${err.response.data.message}`)
+            break
+          case 500:
+            toast.error("Server error.please try again later.")
+            break
+          default:
+            toast.error("An error occured during login.")
+        }
+      } else {
+        toast.error(err.message || "An unexpected error occurred")
+      }
     }
   }
 

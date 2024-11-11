@@ -49,13 +49,13 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email })
 
     if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" })
+      return res.status(401).json({ message: "Email address does not exist" })
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" })
+      return res.status(401).json({ message: "Wrong password" })
     }
 
     const token = jwt.sign(
