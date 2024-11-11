@@ -1,14 +1,12 @@
 import { useAuth } from "../auth/useAuth"
 import { useNavigate } from "react-router-dom"
+import LoadingSpinner from "../components/loadingSpinner"
 
 export default function Dashboard() {
-  const { isLoading, error } = useAuth()
+  const { isLoading } = useAuth()
   const navigate = useNavigate()
 
-  if (isLoading)
-    return <div className="text-center mt-8 text-blue-700">Loading....</div>
-
-  if (error) return <div className="text-center mt-8 text-red-600">{error}</div>
+  if (isLoading) return <LoadingSpinner />
 
   return (
     <div className="max-w-4xl mx-auto">

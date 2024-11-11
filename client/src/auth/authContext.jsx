@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useEffect } from "react"
 import useApi from "../hooks/useApi"
 import { jwtDecode } from "jwt-decode"
 
@@ -12,6 +12,18 @@ function isToken() {
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(isToken())
   const { response: user, isLoading, fetchData } = useApi()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const decoded = decodeToken()
+      if (decoded) {
+        fetchData({
+          url: `/users/${decoded.userId}`,
+          method: "GET",
+        })
+      }
+    }
+  }, [isAuthenticated])
 
   const decodeToken = () => {
     const token = localStorage.getItem("token")
