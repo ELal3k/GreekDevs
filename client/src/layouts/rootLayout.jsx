@@ -11,8 +11,8 @@ export default function RootLayout() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-slate-800 text-white p-4">
+    <div className="flex flex-col min-h-screen bg-slate-100">
+      <header className="sticky top-0 z-50 bg-slate-800 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <NavLink to="/" className="text-2xl font-bold">
             GreekDevs
@@ -77,7 +77,7 @@ export default function RootLayout() {
           </nav>
         </div>
       </header>
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-4 py-8 bg-slate-100">
         <Outlet />
       </main>
       <footer className="bg-slate-800 text-white p-4">

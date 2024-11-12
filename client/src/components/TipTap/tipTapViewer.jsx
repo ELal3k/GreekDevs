@@ -6,11 +6,9 @@ import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
 import { common, createLowlight } from "lowlight"
 import "highlight.js/styles/github-dark-dimmed.css"
 
-import MenuBar from "./menuBar"
-
 const lowlight = createLowlight(common)
 
-export default function TipTapEditor({ onUpdate }) {
+export default function TipTapViewer({ content }) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -28,19 +26,8 @@ export default function TipTapEditor({ onUpdate }) {
         class: "prose prose-base max-w-none focus:outline-none p-4",
       },
     },
-
-    onUpdate: ({ editor }) => {
-      const html = editor.getHTML()
-      onUpdate?.(html)
-    },
+    content,
+    editable: false,
   })
-
-  return (
-    <div className="w-full max-w-4xl mx-auto space-y-4 mt-10">
-      <div className="border rounded-lg">
-        <MenuBar editor={editor} />
-        <EditorContent editor={editor} />
-      </div>
-    </div>
-  )
+  return <EditorContent editor={editor} />
 }

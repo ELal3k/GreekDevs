@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import useApi from "../hooks/useApi"
 import LoadingSpinner from "../components/loadingSpinner"
+import TipTapViewer from "../components/TipTap/tipTapViewer"
 
 export default function HomePage() {
   const { response: articles, isLoading, fetchData } = useApi()
@@ -14,11 +15,15 @@ export default function HomePage() {
   console.log("Articles", articles)
   if (isLoading) return <LoadingSpinner />
   return (
-    <div>
+    <div className="w-full max-w-4xl mx-auto space-y-8">
       {articles &&
         articles.map((article) => (
-          <div key={article.id} className="prose">
-            <div dangerouslySetInnerHTML={{ __html: article.content }} />
+          <div
+            key={article.id}
+            className="border rounded-lg bg-white
+          "
+          >
+            <TipTapViewer content={article.content} />
           </div>
         ))}
     </div>
