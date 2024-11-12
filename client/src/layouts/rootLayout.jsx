@@ -10,7 +10,6 @@ export default function RootLayout() {
     navigate("/")
   }
 
-  console.log("USER FROM LAYOUT OUTSIDE IF", user)
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-slate-800 text-white p-4">

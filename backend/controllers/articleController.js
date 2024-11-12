@@ -50,7 +50,7 @@ const getAllArticles = async (req, res) => {
       content: truncateContent(article.content),
     }))
 
-    res.status(200).json(truncatedArticles)
+    res.status(200).json(articles)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
