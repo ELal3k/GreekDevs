@@ -8,7 +8,7 @@ import "highlight.js/styles/github-dark-dimmed.css"
 
 const lowlight = createLowlight(common)
 
-export default function TipTapViewer({ content }) {
+export default function TipTapViewer({ content, title, author, createdAt }) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -29,5 +29,25 @@ export default function TipTapViewer({ content }) {
     content,
     editable: false,
   })
-  return <EditorContent editor={editor} />
+
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr)
+    const month = date.toLocaleDateString("en-US", { month: "short" })
+    const day = date.toLocaleDateString("en-US", { day: "2-digit" })
+    const year = date.toLocaleDateString("en-US", { year: "2-digit" })
+    return `${month} ${day} '${year}`
+  }
+  return (
+    <article>
+      <div className="p-4 border-b">
+        <h1 className="text-4xl font-bold mb-2">{title}</h1>
+        <div className="flex flex-col items-start gap-1 text-gray-600 text-sm">
+          <span className="font-medium">{author.username}</span>
+
+          <time dateTime={createdAt}>{formatDate(createdAt)}</time>
+        </div>
+      </div>
+      <EditorContent editor={editor} />
+    </article>
+  )
 }

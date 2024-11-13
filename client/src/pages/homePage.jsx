@@ -23,7 +23,12 @@ export default function HomePage() {
             className="border rounded-lg bg-white
           "
           >
-            <TipTapViewer content={article.content} />
+            <TipTapViewer
+              content={article.content}
+              title={article.title}
+              author={article.author}
+              createdAt={article.createdAt}
+            />
           </div>
         ))}
     </div>

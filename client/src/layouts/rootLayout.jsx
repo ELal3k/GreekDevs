@@ -12,7 +12,7 @@ export default function RootLayout() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-100">
-      <header className="sticky top-0 z-50 bg-slate-800 text-white p-4">
+      <header className="sticky top-0 z-50 bg-slate-600 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <NavLink to="/" className="text-2xl font-bold">
             GreekDevs
