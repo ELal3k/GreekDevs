@@ -15,7 +15,6 @@ export default function ArticlePage() {
     })
   }, [])
 
-  console.log("ARTICLE", article)
   if (isLoading) return <LoadingSpinner />
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
