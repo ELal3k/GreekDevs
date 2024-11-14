@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import LoadingSpinner from "../components/loadingSpinner"
 
 export default function Dashboard() {
-  const { isLoading } = useAuth()
+  const { isLoading, user } = useAuth()
   const navigate = useNavigate()
 
   if (isLoading) return <LoadingSpinner />
@@ -16,7 +16,7 @@ export default function Dashboard() {
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold">
               Welcome back,
-              {/* {user.username}! */}
+              {user?.username}
             </h1>
             <button
               onClick={() => {
@@ -33,11 +33,11 @@ export default function Dashboard() {
               <p className="text-gray-600">Profile Information</p>
               <p>
                 <span className="font-medium">Username:</span>
-                {/* {user.username} */}
+                {user?.username}
               </p>
               <p>
                 <span className="font-medium">Email:</span>
-                {/* {user.email} */}
+                {user?.email}
               </p>
             </div>
 
@@ -45,12 +45,11 @@ export default function Dashboard() {
               <p className="text-gray-600">Account Statistics</p>
               <p>
                 <span className="font-medium">Member since:</span>{" "}
-                {/* {new Date(user.createdAt).toLocaleDateString()} */}
-                Date
+                {new Date(user?.createdAt).toLocaleDateString()}
               </p>
               <p>
                 <span className="font-medium">Articles written:</span>{" "}
-                {/* {user.articlesCount || 0} */}
+                {user?.articlesCount}
               </p>
             </div>
           </div>
