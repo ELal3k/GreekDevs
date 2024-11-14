@@ -5,10 +5,13 @@ import Typography from "@tiptap/extension-typography"
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
 import { common, createLowlight } from "lowlight"
 import "highlight.js/styles/github-dark-dimmed.css"
+import { useNavigate } from "react-router-dom"
 
 const lowlight = createLowlight(common)
 
 export default function TipTapViewer({ content, title, author, createdAt }) {
+  const navigate = useNavigate()
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -40,7 +43,12 @@ export default function TipTapViewer({ content, title, author, createdAt }) {
   return (
     <article>
       <div className="p-4 border-b">
-        <h1 className="text-4xl font-bold mb-2">{title}</h1>
+        <h1
+          className="text-4xl font-bold mb-2"
+          onClick={() => navigate("/article")}
+        >
+          {title}
+        </h1>
         <div className="flex flex-col items-start gap-1 text-gray-600 text-sm">
           <span className="font-medium">{author.username}</span>
 

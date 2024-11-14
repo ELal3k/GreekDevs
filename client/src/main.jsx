@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { AuthProvider } from "./auth/authContext.jsx"
 import RootLayout from "./layouts/rootLayout.jsx"
 import ErrorPage from "./pages/errorPage.jsx"
+import ArticlePage from "./pages/articlePage.jsx"
 
 import HomePage from "./pages/homePage.jsx"
 import RegisterPage from "./pages/registerPage.jsx"
@@ -20,10 +21,15 @@ const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
+
     children: [
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/article",
+        element: <ArticlePage />,
       },
       {
         element: <PublicRoute />,
