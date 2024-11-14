@@ -19,7 +19,7 @@ export default function HomePage() {
       {articles &&
         articles.map((article) => (
           <div
-            key={article.id}
+            key={article._id}
             className="border rounded-lg bg-white
           "
           >
@@ -27,6 +27,7 @@ export default function HomePage() {
               content={article.content}
               title={article.title}
               author={article.author}
+              id={article._id}
               createdAt={article.createdAt}
             />
           </div>

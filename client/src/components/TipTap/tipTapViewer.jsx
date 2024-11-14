@@ -9,7 +9,13 @@ import { useNavigate } from "react-router-dom"
 
 const lowlight = createLowlight(common)
 
-export default function TipTapViewer({ content, title, author, createdAt }) {
+export default function TipTapViewer({
+  content,
+  title,
+  author,
+  createdAt,
+  id,
+}) {
   const navigate = useNavigate()
 
   const editor = useEditor({
@@ -40,12 +46,15 @@ export default function TipTapViewer({ content, title, author, createdAt }) {
     const year = date.toLocaleDateString("en-US", { year: "2-digit" })
     return `${month} ${day} '${year}`
   }
+
+  console.log("ID", id)
+
   return (
     <article>
       <div className="p-4 border-b">
         <h1
           className="text-4xl font-bold mb-2 hover:text-blue-700 cursor-pointer"
-          onClick={() => navigate("/article")}
+          onClick={() => navigate(`/article/${id}`)}
         >
           {title}
         </h1>
