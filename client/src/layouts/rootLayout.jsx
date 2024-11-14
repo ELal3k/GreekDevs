@@ -80,7 +80,7 @@ export default function RootLayout() {
       <main className="flex-grow container mx-auto px-4 py-8 bg-slate-100">
         <Outlet />
       </main>
-      <footer className="bg-slate-800 text-white p-4">
+      <footer className="bg-slate-600 text-white p-4">
         <div className="container mx-auto text-center">
           <p>&copy; 2024 GreekDevs. All rights reserved.</p>
         </div>
