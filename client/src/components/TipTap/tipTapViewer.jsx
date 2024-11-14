@@ -44,7 +44,7 @@ export default function TipTapViewer({ content, title, author, createdAt }) {
     <article>
       <div className="p-4 border-b">
         <h1
-          className="text-4xl font-bold mb-2"
+          className="text-4xl font-bold mb-2 hover:text-blue-700 cursor-pointer"
           onClick={() => navigate("/article")}
         >
           {title}
