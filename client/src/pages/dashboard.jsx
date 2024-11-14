@@ -8,6 +8,8 @@ export default function Dashboard() {
 
   if (isLoading) return <LoadingSpinner />
 
+  console.log(user?._id)
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="space-y-6">
@@ -19,9 +21,7 @@ export default function Dashboard() {
               {user?.username}
             </h1>
             <button
-              onClick={() => {
-                /* Handle edit profile */
-              }}
+              onClick={() => {}}
               className="text-blue-500 hover:text-blue-600"
             >
               Edit Profile
@@ -55,7 +55,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Quick Actions */}
         <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -69,7 +68,7 @@ export default function Dashboard() {
 
             <button
               onClick={() => {
-                /* Handle action */
+                navigate(`/my-articles/${user?._id}`)
               }}
               className="p-4 text-center bg-green-50 rounded-lg hover:bg-green-100"
             >
