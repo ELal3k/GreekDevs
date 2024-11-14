@@ -12,7 +12,6 @@ export default function HomePage() {
     })
   }, [])
 
-  console.log("Articles", articles)
   if (isLoading) return <LoadingSpinner />
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -24,11 +23,11 @@ export default function HomePage() {
           "
           >
             <TipTapViewer
-              content={article.content}
-              title={article.title}
-              author={article.author}
-              id={article._id}
-              createdAt={article.createdAt}
+              content={article?.content}
+              title={article?.title}
+              author={article?.author}
+              id={article?._id}
+              createdAt={article?.createdAt}
             />
           </div>
         ))}

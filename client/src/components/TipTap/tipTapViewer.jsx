@@ -47,8 +47,6 @@ export default function TipTapViewer({
     return `${month} ${day} '${year}`
   }
 
-  console.log("ID", id)
-
   return (
     <article>
       <div className="p-4 border-b">
@@ -59,7 +57,7 @@ export default function TipTapViewer({
           {title}
         </h1>
         <div className="flex flex-col items-start gap-1 text-gray-600 text-sm">
-          <span className="font-medium">{author.username}</span>
+          <span className="font-medium">{author?.username}</span>
 
           <time dateTime={createdAt}>{formatDate(createdAt)}</time>
         </div>

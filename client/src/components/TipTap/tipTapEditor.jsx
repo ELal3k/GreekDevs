@@ -39,7 +39,7 @@ export default function TipTapEditor({ onUpdate }) {
     <div className="w-full max-w-4xl mx-auto space-y-4 mt-10">
       <div className="border rounded-lg">
         <MenuBar editor={editor} />
-        <EditorContent editor={editor} />
+        <EditorContent editor={editor} className="bg-white" />
       </div>
     </div>
   )

@@ -63,12 +63,6 @@ export default function ArticleCreationForm() {
       <h1 className="text-2xl font-bold mb-6">Create New Article</h1>
       <div className="space-y-4">
         <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Article Title
-          </label>
           <input
             type="text"
             name="title"
