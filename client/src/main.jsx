@@ -7,7 +7,6 @@ import { AuthProvider } from "./auth/authContext.jsx"
 import RootLayout from "./layouts/rootLayout.jsx"
 import ErrorPage from "./pages/errorPage.jsx"
 import ArticlePage from "./pages/articlePage.jsx"
-import MyArticles from "./pages/myArticles.jsx"
 
 import HomePage from "./pages/homePage.jsx"
 import RegisterPage from "./pages/registerPage.jsx"
@@ -55,10 +54,6 @@ const router = createBrowserRouter([
           {
             path: "/create-article",
             element: <ArticleCreationForm />,
-          },
-          {
-            path: "my-articles/:id",
-            element: <MyArticles />,
           },
         ],
       },
