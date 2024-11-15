@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import useApi from "../hooks/useApi"
-import LoadingSpinner from "../components/loadingSpinner"
+import LoadingSpinner from "../components/UI/loadingSpinner"
 import TipTapViewer from "../components/TipTap/tipTapViewer"
 
 export default function HomePage() {

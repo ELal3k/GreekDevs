@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import useApi from "../hooks/useApi"
-import LoadingSpinner from "../components/loadingSpinner"
+import LoadingSpinner from "../components/UI/loadingSpinner"
 import TipTapViewer from "../components/TipTap/tipTapViewer"
 
 export default function ArticlePage() {
