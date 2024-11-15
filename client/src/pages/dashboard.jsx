@@ -8,10 +8,8 @@ export default function Dashboard() {
 
   if (isLoading) return <LoadingSpinner />
 
-  console.log(user?._id)
-
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <div className="space-y-6">
         {/* Profile Section */}
         <div className="bg-white shadow rounded-lg p-6">

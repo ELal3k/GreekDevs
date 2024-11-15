@@ -41,7 +41,7 @@ export default function RootLayout() {
                   </li>
                   <li>
                     {user && (
-                      <div className=" bg-blue-500 font-extrabold text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center">
+                      <div className=" bg-blue-500 text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center">
                         {user.username.substring(0, 1)}
                       </div>
                     )}

@@ -44,7 +44,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mx-auto mt-10 shadow-md p-4 rounded-xl bg-white">
       <ToastContainer
         position="top-right"
         autoClose={5000}
