@@ -20,17 +20,38 @@ export default function Dashboard() {
   if (!user) return <LoadingSpinner />
   if (isLoading) return <LoadingSpinner />
 
-  console.log("USER", user)
+  const handleDelete = async (id) => {
+    try {
+      await fetchData({
+        url: `/articles/delete/${id}`,
+        method: "DELETE",
+      })
+
+      await fetchData({
+        url: `/articles/author/${user?._id}`,
+        method: "GET",
+      })
+    } catch (err) {
+      console.log("Error deleting article:", err)
+    }
+  }
   console.log("ARTICLES", articles)
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-2">
       <h1 className="text-3xl font-bold">Dashboard</h1>
 
       <h2 className="text-xl font-bold">Posts</h2>
-      {articles &&
-        articles.map((article) => (
-          <DashboardArticleCard title={article.title} key={article._id} />
-        ))}
+      {!articles || articles.length === 0 ? (
+        <p>You have no posts yet...</p>
+      ) : (
+        articles?.map((article) => (
+          <DashboardArticleCard
+            title={article.title}
+            key={article._id}
+            onDelete={() => handleDelete(article._id)}
+          />
+        ))
+      )}
     </div>
   )
 }

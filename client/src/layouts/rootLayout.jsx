@@ -23,6 +23,18 @@ export default function RootLayout() {
                 <div className="flex items-center gap-4">
                   <li>
                     <NavLink
+                      to="/create-article"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 border-[1px] border-blue-400 px-4 py-2 rounded-md"
+                          : "text-white border-[1px] border-white px-4 py-2 rounded-md"
+                      }
+                    >
+                      Create Post
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
                       to="/dashboard"
                       className={({ isActive }) =>
                         isActive ? "text-blue-400" : "hover:text-blue-400"

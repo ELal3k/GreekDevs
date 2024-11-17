@@ -168,12 +168,6 @@ const getArticlesByAuthor = async (req, res) => {
       "username"
     )
 
-    if (articles.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No articles found by this author" })
-    }
-
     const truncatedArticles = articles.map((article) => ({
       ...article.toObject(),
       content: truncateContent(article.content),
