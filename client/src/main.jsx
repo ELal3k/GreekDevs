@@ -12,6 +12,7 @@ import HomePage from "./pages/homePage.jsx"
 import RegisterPage from "./pages/registerPage.jsx"
 import LoginPage from "./pages/loginPage.jsx"
 import ArticleCreationForm from "./pages/articleCreationForm.jsx"
+import ArticleEditForm from "./pages/articleEditForm.jsx"
 import Dashboard from "./pages/dashboard.jsx"
 import ProtectedRoute from "./components/protectedRoute.jsx"
 import PublicRoute from "./components/publicRoute.jsx"
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
           {
             path: "/create-article",
             element: <ArticleCreationForm />,
+          },
+          {
+            path: "/edit-article",
+            element: <ArticleEditForm />,
           },
         ],
       },

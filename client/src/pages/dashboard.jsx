@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useAuth } from "../auth/useAuth"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import useApi from "../hooks/useApi"
 import LoadingSpinner from "../components/UI/loadingSpinner"
 import DashboardArticleCard from "../components/UI/dashboardArticleCard"
@@ -8,6 +8,8 @@ import DashboardArticleCard from "../components/UI/dashboardArticleCard"
 export default function Dashboard() {
   const { user } = useAuth()
   const { response: articles, isLoading, fetchData } = useApi()
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (user?._id) {
@@ -36,7 +38,6 @@ export default function Dashboard() {
       console.log("Error deleting article:", err)
     }
   }
-  console.log("ARTICLES", articles)
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-2">
       <h1 className="text-3xl font-bold">Dashboard</h1>
@@ -67,6 +68,7 @@ export default function Dashboard() {
             title={article.title}
             key={article._id}
             onDelete={() => handleDelete(article._id)}
+            onEdit={() => navigate("/edit-article")}
           />
         ))
       )}

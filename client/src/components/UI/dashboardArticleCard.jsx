@@ -1,6 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog"
 
-export default function DashboardArticleCard({ title, onDelete }) {
+export default function DashboardArticleCard({ title, onDelete, onEdit }) {
   return (
     <div className="w-full bg-white px-4 min-h-16 rounded-md shadow-md flex items-center justify-between">
       <p className="font-semibold text-xl text-blue-800">{title}</p>
@@ -35,7 +35,10 @@ export default function DashboardArticleCard({ title, onDelete }) {
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog.Root>
-        <button className=" px-2 py-1 rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md">
+        <button
+          className=" px-2 py-1 rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md"
+          onClick={() => onEdit()}
+        >
           Edit
         </button>
       </div>
