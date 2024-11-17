@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useAuth } from "../auth/useAuth"
+import { NavLink } from "react-router-dom"
 import useApi from "../hooks/useApi"
 import LoadingSpinner from "../components/UI/loadingSpinner"
 import DashboardArticleCard from "../components/UI/dashboardArticleCard"
@@ -42,7 +43,24 @@ export default function Dashboard() {
 
       <h2 className="text-xl font-bold">Posts</h2>
       {!articles || articles.length === 0 ? (
-        <p>You have no posts yet...</p>
+        <div className="bg-slate-200 flex flex-col items-center justify-center shadow-md p-4">
+          <p className="flex items-center text-3xl font-semibold ">
+            You have no posts yet...
+          </p>
+          <p className="flex items-center text-3xl font-semibold ">
+            Maybe{" "}
+            <span>
+              {" "}
+              <NavLink
+                to="/create-article"
+                className=" px-2 text-blue-600 underline underline-offset-1 decoration-2"
+              >
+                Create
+              </NavLink>
+            </span>
+            one?
+          </p>
+        </div>
       ) : (
         articles?.map((article) => (
           <DashboardArticleCard
