@@ -1,5 +1,5 @@
 import { useState } from "react"
-import TipTapEditor from "../components/TipTap/tiptapEditor"
+import TipTapEditor from "../components/TipTap/tipTapEditor"
 import useApi from "../hooks/useApi"
 import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
