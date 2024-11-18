@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import useApi from "../hooks/useApi"
 import LoadingSpinner from "../components/UI/loadingSpinner"
 import TipTapUpdater from "../components/TipTap/tipTapUpdater"
@@ -11,7 +11,9 @@ export default function ArticleEditForm() {
   const { response: article, isLoading, fetchData } = useApi()
 
   const [title, setTitle] = useState("")
-  const [content, setContent] = useState(null)
+  const [content, setContent] = useState(article?.content)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getArticle = async () => {
@@ -23,6 +25,7 @@ export default function ArticleEditForm() {
 
         if (res) {
           setTitle(res?.title)
+          setContent(res?.content)
         }
       } catch (err) {
         console.log("Failed to fetch article", err)
@@ -44,11 +47,31 @@ export default function ArticleEditForm() {
       toast.error("Some content is required")
       return
     }
+
+    try {
+      const res = await fetchData({
+        url: `/articles/update/${articleId}`,
+        method: "PUT",
+        data: {
+          title: title.trim(),
+          content,
+        },
+      })
+
+      if (res.success) {
+        toast.success("Article updated successfully!", {
+          autoClose: 1500,
+          onClose: () => navigate("/dashboard"),
+        })
+      }
+    } catch (err) {
+      console.log("Error creating article", err)
+      toast.error(err.response?.data?.message || "Failed to create article")
+    }
   }
 
-  if (isLoading) return <LoadingSpinner />
+  if (!article && isLoading) return <LoadingSpinner />
 
-  console.log(content)
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4">
       <ToastContainer
@@ -84,7 +107,7 @@ export default function ArticleEditForm() {
           disabled={isLoading}
           className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Save Article
+          Update Article
         </button>
       </div>
     </form>

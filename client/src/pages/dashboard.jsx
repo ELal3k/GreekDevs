@@ -7,21 +7,22 @@ import DashboardArticleCard from "../components/UI/dashboardArticleCard"
 
 export default function Dashboard() {
   const { user } = useAuth()
-  const { response: articles, isLoading, fetchData } = useApi()
+  const { response: articles, isLoading, isInitialized, fetchData } = useApi()
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user?._id) {
-      fetchData({
-        url: `/articles/author/${user?._id}`,
-        method: "GET",
-      })
+    const getAuthorArticles = async () => {
+      if (user?._id) {
+        fetchData({
+          url: `/articles/author/${user?._id}`,
+          method: "GET",
+        })
+      }
     }
-  }, [user?._id])
 
-  if (!user) return <LoadingSpinner />
-  if (isLoading) return <LoadingSpinner />
+    getAuthorArticles()
+  }, [user?._id])
 
   const handleDelete = async (id) => {
     try {
@@ -37,6 +38,10 @@ export default function Dashboard() {
     } catch (err) {
       console.log("Error deleting article:", err)
     }
+  }
+
+  if (!isInitialized || (isLoading && !articles)) {
+    return <LoadingSpinner />
   }
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-2">

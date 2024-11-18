@@ -4,6 +4,7 @@ import axios from "axios"
 const useApi = () => {
   const [response, setResponse] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
 
   const axiosInstance = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
@@ -29,16 +30,18 @@ const useApi = () => {
       })
 
       setResponse(res.data)
+      setIsInitialized(true)
       return res.data
     } catch (err) {
       console.log(err.message)
+      setIsInitialized(true)
       throw err
     } finally {
       setIsLoading(false)
     }
   }
 
-  return { response, isLoading, fetchData }
+  return { response, isLoading, fetchData, isInitialized }
 }
 
 export default useApi
