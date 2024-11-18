@@ -49,9 +49,8 @@ export default function Dashboard() {
             You have no posts yet...
           </p>
           <p className="flex items-center text-3xl font-semibold ">
-            Maybe{" "}
+            Maybe
             <span>
-              {" "}
               <NavLink
                 to="/create-article"
                 className=" px-2 text-blue-600 underline underline-offset-1 decoration-2"
@@ -68,7 +67,7 @@ export default function Dashboard() {
             title={article.title}
             key={article._id}
             onDelete={() => handleDelete(article._id)}
-            onEdit={() => navigate("/edit-article")}
+            onEdit={() => navigate(`/edit-article/${article._id}`)}
           />
         ))
       )}

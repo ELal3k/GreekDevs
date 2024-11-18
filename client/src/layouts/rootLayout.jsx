@@ -27,7 +27,7 @@ export default function RootLayout() {
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 border-[1px] border-blue-400 px-4 py-2 rounded-md"
-                          : "text-white border-[1px] border-white px-4 py-2 rounded-md"
+                          : "text-white border-[1px] border-white px-4 py-2 rounded-md hover:text-blue-100 hover:border-blue-100"
                       }
                     >
                       Create Post
@@ -37,7 +37,7 @@ export default function RootLayout() {
                     <NavLink
                       to="/dashboard"
                       className={({ isActive }) =>
-                        isActive ? "text-blue-400" : "hover:text-blue-400"
+                        isActive ? "text-blue-400" : "hover:text-blue-100"
                       }
                     >
                       Dashboard
@@ -46,7 +46,7 @@ export default function RootLayout() {
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="hover:text-blue-400"
+                      className="hover:text-blue-100"
                     >
                       Log out
                     </button>

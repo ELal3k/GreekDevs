@@ -35,7 +35,6 @@ export default function ArticleCreationForm() {
       })
 
       if (res) {
-        console.log(res)
         toast.success("Article created successfully!", {
           autoClose: 1500,
           onClose: () => navigate("/"),
