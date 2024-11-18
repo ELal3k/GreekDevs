@@ -45,7 +45,7 @@ export default function ArticleCreationForm() {
       toast.error(err.response?.data?.message || "Failed to create article")
     }
   }
-
+  console.log(content)
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4">
       <ToastContainer

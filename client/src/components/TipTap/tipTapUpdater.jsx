@@ -29,9 +29,10 @@ export default function TipTapUpdater({ initialContent, onUpdate }) {
         class: "prose prose-base max-w-none focus:outline-none p-4",
       },
     },
+
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML
-      onUpdate?.({ html })
+      const html = editor?.getHTML()
+      onUpdate?.(html)
     },
   })
   return (
