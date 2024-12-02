@@ -69,10 +69,10 @@ export default function Dashboard() {
       ) : (
         articles?.map((article) => (
           <DashboardArticleCard
-            title={article.title}
-            key={article._id}
-            onDelete={() => handleDelete(article._id)}
-            onEdit={() => navigate(`/edit-article/${article._id}`)}
+            title={article?.title}
+            key={article?._id}
+            onDelete={() => handleDelete(article?._id)}
+            onEdit={() => navigate(`/edit-article/${article?._id}`)}
           />
         ))
       )}

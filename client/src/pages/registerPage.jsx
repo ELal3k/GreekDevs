@@ -64,6 +64,7 @@ export default function RegisterPage() {
           <label htmlFor="username" className="block mb-1">
             Username
           </label>
+
           <input
             type="text"
             id="username"
