@@ -4,22 +4,25 @@ import { jwtDecode } from "jwt-decode"
 
 export const AuthContext = createContext()
 
-function isTokenValid() {
+function validateAndDecodeToken() {
   const token = localStorage.getItem("token")
-  const isToken = !token ? false : token
-  const isTokenExpired = jwtDecode(isToken).exp < Math.floor(Date.now() / 1000)
-  return isToken && !isTokenExpired
+  const isToken = !token
+    ? false
+    : jwtDecode(token).exp > Math.floor(Date.now() / 1000)
+  return isToken
 }
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(isTokenValid())
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    validateAndDecodeToken()
+  )
   const { response: user, isLoading, fetchData } = useApi()
 
   useEffect(() => {
     if (isAuthenticated) {
       const decoded = decodeToken()
-      console.log("decoded", decoded.exp)
-      console.log("isExpired", decoded.exp < Date.now() / 1000)
+      console.log("USE EFFECT decoded", decoded.exp)
+      console.log("USE EFFECT isExpired", decoded.exp < Date.now() / 1000)
       if (decoded) {
         fetchData({
           url: `/users/${decoded.userId}`,
