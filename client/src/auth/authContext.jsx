@@ -4,13 +4,15 @@ import { jwtDecode } from "jwt-decode"
 
 export const AuthContext = createContext()
 
-function isToken() {
+function isTokenValid() {
   const token = localStorage.getItem("token")
-  return !!token
+  const isToken = !token ? false : token
+  const isTokenExpired = jwtDecode(isToken).exp < Math.floor(Date.now() / 1000)
+  return isToken && !isTokenExpired
 }
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(isToken())
+  const [isAuthenticated, setIsAuthenticated] = useState(isTokenValid())
   const { response: user, isLoading, fetchData } = useApi()
 
   useEffect(() => {
