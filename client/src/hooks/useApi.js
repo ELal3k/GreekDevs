@@ -12,14 +12,6 @@ const useApi = () => {
 
   axiosInstance.interceptors.request.use((config) => {
     const token = localStorage.getItem("token")
-    console.log(
-      "9. API Request Config:", //---9---
-      {
-        url: config.url,
-        method: config.method,
-        hasToken: !!token,
-      }
-    )
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
@@ -28,8 +20,6 @@ const useApi = () => {
   })
 
   const fetchData = async ({ url, method, data = {}, params = {} }) => {
-    console.log("10. fetchData called with:", { url, method }) //---10---
-
     setIsLoading(true)
     try {
       const res = await axiosInstance({
@@ -38,12 +28,10 @@ const useApi = () => {
         data,
         params,
       })
-      console.log("11. API Response:", res.data) //---11---
       setResponse(res.data)
       setIsInitialized(true)
       return res.data
     } catch (err) {
-      console.log("12. API Error:", err.message) //---12---
       console.log(err.message)
       setIsInitialized(true)
       throw err

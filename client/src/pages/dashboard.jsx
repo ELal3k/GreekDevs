@@ -13,12 +13,10 @@ export default function Dashboard() {
 
   const getAuthorArticles = async () => {
     if (user?._id) {
-      console.log("1.Fetching articles for author:", user._id) //----1----
-      const res = await fetchData({
+      await fetchData({
         url: `/articles/author/${user?._id}`,
         method: "GET",
       })
-      console.log("2.Initial articles fetch result :", res) //----2----
     }
   }
 
@@ -28,25 +26,17 @@ export default function Dashboard() {
 
   const handleDelete = async (id) => {
     try {
-      console.log("3. Starting delete operation for article:", id) //----3----
-
       const deleteRes = await fetchData({
         url: `/articles/delete/${id}`,
         method: "DELETE",
       })
-      console.log("4. Delete operation result:", deleteRes) //----4----
       if (deleteRes.success) {
         await getAuthorArticles()
-        console.log("5. GETARTICLES AFTER DELETE IS SUCCESS")
       }
-
-      console.log("6. Current articles state:", articles) //----6----
     } catch (err) {
-      console.log("7. Error deleting article:", err) //----7----
+      console.log("Error deleting article:", err)
     }
   }
-
-  console.log("8. Rendering with articles:", articles) //----8----
 
   if (!isInitialized || (isLoading && !articles)) {
     return <LoadingSpinner />
