@@ -16,6 +16,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (isAuthenticated) {
       const decoded = decodeToken()
+      console.log("decoded", decoded.exp)
+      console.log("isExpired", decoded.exp < Date.now() / 1000)
       if (decoded) {
         fetchData({
           url: `/users/${decoded.userId}`,
