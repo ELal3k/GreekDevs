@@ -9,13 +9,7 @@ import "react-toastify/dist/ReactToastify.css"
 
 export default function Dashboard() {
   const { user, validateAndDecodeToken, logout } = useAuth()
-  const {
-    response: articles,
-    isLoading,
-    isInitialized,
-    setIsInitialized,
-    fetchData,
-  } = useApi()
+  const { response: articles, isLoading, isInitialized, fetchData } = useApi()
 
   const navigate = useNavigate()
 
@@ -27,13 +21,7 @@ export default function Dashboard() {
       })
     } else {
       console.log("User not logged in")
-      toast.error("Token expired. Please log in again.", {
-        onClose: () => {
-          logout()
-        },
-        autoClose: 2000,
-      })
-      setIsInitialized(true)
+      logout()
     }
   }
 
@@ -52,7 +40,7 @@ export default function Dashboard() {
       }
     } catch (err) {
       console.log("Error deleting article:", err)
-      toast.error(err.response?.data?.message || "Failed to create article")
+      logout()
     }
   }
 

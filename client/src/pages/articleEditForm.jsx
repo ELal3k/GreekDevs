@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css"
 
 export default function ArticleEditForm() {
   const { articleId } = useParams()
-  const { response: article, isLoading, fetchData } = useApi()
+  const { response: article, isLoading, fetchData, logout } = useApi()
 
   const [title, setTitle] = useState("")
   const [content, setContent] = useState(article?.content)
@@ -66,7 +66,7 @@ export default function ArticleEditForm() {
       }
     } catch (err) {
       console.log("Error creating article", err)
-      toast.error(err.response?.data?.message || "Failed to create article")
+      logout()
     }
   }
 
