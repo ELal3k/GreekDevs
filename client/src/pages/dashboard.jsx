@@ -8,17 +8,32 @@ import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 export default function Dashboard() {
-  const { user } = useAuth()
-  const { response: articles, isLoading, isInitialized, fetchData } = useApi()
+  const { user, validateAndDecodeToken, logout } = useAuth()
+  const {
+    response: articles,
+    isLoading,
+    isInitialized,
+    setIsInitialized,
+    fetchData,
+  } = useApi()
 
   const navigate = useNavigate()
 
   const getAuthorArticles = async () => {
-    if (user?._id) {
+    if (user?._id && validateAndDecodeToken()) {
       await fetchData({
         url: `/articles/author/${user?._id}`,
         method: "GET",
       })
+    } else {
+      console.log("User not logged in")
+      toast.error("Token expired. Please log in again.", {
+        onClose: () => {
+          logout()
+        },
+        autoClose: 2000,
+      })
+      setIsInitialized(true)
     }
   }
 

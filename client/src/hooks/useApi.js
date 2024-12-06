@@ -40,7 +40,7 @@ const useApi = () => {
     }
   }
 
-  return { response, isLoading, fetchData, isInitialized }
+  return { response, isLoading, fetchData, isInitialized, setIsInitialized }
 }
 
 export default useApi
