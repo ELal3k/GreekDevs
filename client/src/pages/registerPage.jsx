@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import axios from "axios"
 // import { Link } from "react-router-dom"
 import { Eye, EyeOff } from "lucide-react"
@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css"
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [previewImage, setPreviewImage] = useState(null)
 
   const {
     register,
@@ -41,6 +42,12 @@ export default function RegisterPage() {
         err.response?.data?.message || "An error occurred during registration"
       )
     }
+  }
+
+  const handleChange = (e) => {
+    console.log("File selected:", e.target.files[0])
+    const selectedFile = e.target.files[0]
+    setPreviewImage(URL.createObjectURL(selectedFile))
   }
 
   return (
@@ -183,6 +190,26 @@ export default function RegisterPage() {
             </p>
           )}
         </div>
+        <div className="w-full mb-4 px-3 py-2 cursor-pointer">
+          <input
+            type="file"
+            id="file-upload"
+            {...register("avatar", {
+              required: false,
+              onChange: (e) => handleChange(e),
+            })}
+          />
+          {errors.avatar && (
+            <p className="text-red-500 text-sm mt-1">{errors.avatar.message}</p>
+          )}
+        </div>
+        {previewImage && (
+          <img
+            src={previewImage}
+            alt="preview"
+            className="w-full h-auto object-cover rounded-lg"
+          />
+        )}
 
         <button
           type="submit"

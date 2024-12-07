@@ -4,8 +4,6 @@ import { NavLink, useNavigate } from "react-router-dom"
 import useApi from "../hooks/useApi"
 import LoadingSpinner from "../components/UI/loadingSpinner"
 import DashboardArticleCard from "../components/UI/dashboardArticleCard"
-import { toast, ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
 
 export default function Dashboard() {
   const { user, validateAndDecodeToken, logout } = useAuth()
@@ -52,17 +50,6 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-2">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <h1 className="text-3xl font-bold">Dashboard</h1>
 
       <h2 className="text-xl font-bold">Posts</h2>

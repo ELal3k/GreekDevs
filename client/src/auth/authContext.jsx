@@ -9,7 +9,7 @@ function validateAndDecodeToken() {
   const isToken = !token
     ? false
     : jwtDecode(token).exp > Math.floor(Date.now() / 1000)
-  console.log("Validate token:", isToken)
+
   return isToken
 }
 
