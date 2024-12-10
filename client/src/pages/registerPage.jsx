@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css"
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [previewImage, setPreviewImage] = useState(null)
+  // const [previewImage, setPreviewImage] = useState(null)
 
   const {
     register,
@@ -44,11 +44,11 @@ export default function RegisterPage() {
     }
   }
 
-  const handleChange = (e) => {
-    console.log("File selected:", e.target.files[0])
-    const selectedFile = e.target.files[0]
-    setPreviewImage(URL.createObjectURL(selectedFile))
-  }
+  // const handleChange = (e) => {
+  //   console.log("File selected:", e.target.files[0])
+  //   const selectedFile = e.target.files[0]
+  //   setPreviewImage(URL.createObjectURL(selectedFile))
+  // }
 
   return (
     <div className="max-w-md mx-auto mt-10 shadow-md p-4 rounded-xl bg-white">
@@ -190,7 +190,8 @@ export default function RegisterPage() {
             </p>
           )}
         </div>
-        <div className="w-full mb-4 px-3 py-2 cursor-pointer">
+        {/* ------------------- AVATAR ----------------------- */}
+        {/* <div className="w-full mb-4 px-3 py-2 cursor-pointer">
           <input
             type="file"
             id="file-upload"
@@ -209,7 +210,7 @@ export default function RegisterPage() {
             alt="preview"
             className="w-full h-auto object-cover rounded-lg"
           />
-        )}
+        )} */}
 
         <button
           type="submit"
