@@ -1,20 +1,14 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom"
+import { NavLink, Outlet } from "react-router-dom"
 import { useAuth } from "../auth/useAuth"
 import UserDropdown from "../components/UI/userDropdown"
 
 export default function RootLayout() {
-  const { isAuthenticated, logout, user } = useAuth()
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    logout()
-    navigate("/")
-  }
+  const { isAuthenticated, user } = useAuth()
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-100">
-      <header className="sticky top-0 bg-slate-600 text-white p-4 z-0">
-        <div className="container mx-auto flex justify-between items-center">
+    <div className="flex min-h-screen flex-col bg-slate-100">
+      <header className="sticky top-0 z-0 bg-slate-600 p-4 text-white">
+        <div className="container mx-auto flex items-center justify-between">
           <NavLink to="/" className="text-2xl font-bold">
             GreekDevs
           </NavLink>
@@ -34,24 +28,7 @@ export default function RootLayout() {
                       Create Post
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard"
-                      className={({ isActive }) =>
-                        isActive ? "text-blue-400" : "hover:text-blue-100"
-                      }
-                    >
-                      Dashboard
-                    </NavLink>
-                  </li>
-                  <li>
-                    <button
-                      onClick={handleLogout}
-                      className="hover:text-blue-100"
-                    >
-                      Log out
-                    </button>
-                  </li>
+
                   <li>{user && <UserDropdown user={user} />}</li>
                 </div>
               ) : (
@@ -84,10 +61,10 @@ export default function RootLayout() {
           </nav>
         </div>
       </header>
-      <main className="flex-grow container mx-auto px-4 py-8 bg-slate-100">
+      <main className="container mx-auto flex-grow bg-slate-100 px-4 py-8">
         <Outlet />
       </main>
-      <footer className="bg-slate-600 text-white p-4">
+      <footer className="bg-slate-600 p-4 text-white">
         <div className="container mx-auto text-center">
           <p>&copy; 2024 GreekDevs. All rights reserved.</p>
         </div>

@@ -1,45 +1,58 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../../auth/useAuth"
 import { User, LayoutDashboard, LogOut } from "lucide-react"
 
 export default function UserDropdown({ user }) {
+  const { logout } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate("/")
+  }
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <div className="bg-blue-500 text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:bg-blue-600 transition-colors">
+        <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-blue-500 p-2 text-lg transition-colors hover:bg-blue-600">
           {user.username.substring(0, 1)}
         </div>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="min-w-[160px] bg-white rounded-md p-2 shadow-lg"
+          className="min-w-[160px] rounded-md bg-white p-2 shadow-lg"
           sideOffset={5}
-          align="middle"
+          align="end"
         >
           <DropdownMenu.Item className="outline-none">
-            <button className="w-full text-left px-2 py-2 text-sm rounded hover:bg-gray-100 flex items-center gap-2">
-              <User className="w-4 h-4" />
+            <button className="flex w-full items-center gap-2 rounded px-2 py-2 text-left text-sm hover:bg-gray-100 hover:text-blue-500">
+              <User className="h-4 w-4" />
               Edit Profile
             </button>
           </DropdownMenu.Item>
           <DropdownMenu.Item className="outline-none">
-            <button className="w-full text-left px-2 py-2 text-sm rounded hover:bg-gray-100 flex items-center gap-2">
-              <LayoutDashboard className="w-4 h-4" />
+            <Link
+              to="/dashboard"
+              className="flex w-full items-center gap-2 rounded px-2 py-2 text-left text-sm hover:bg-gray-100 hover:text-blue-500"
+            >
+              <LayoutDashboard className="h-4 w-4" />
               Dashboard
-            </button>
+            </Link>
           </DropdownMenu.Item>
-          <DropdownMenu.Separator className="h-[1px] bg-gray-200 m-1" />
+          <DropdownMenu.Separator className="m-1 h-[1px] bg-gray-200" />
 
           <DropdownMenu.Item className="outline-none">
-            <button className="w-full text-left px-2 py-2 text-sm rounded hover:bg-gray-100 flex items-center gap-2">
-              <LogOut className="w-4 h-4 " />
+            <button
+              className="flex w-full items-center gap-2 rounded px-2 py-2 text-left text-sm hover:bg-gray-100 hover:text-blue-500"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4" />
               Logout
             </button>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
-    // <div className=" bg-blue-500 text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center">
-    //   {user.username.substring(0, 1)}
-    // </div>
   )
 }
