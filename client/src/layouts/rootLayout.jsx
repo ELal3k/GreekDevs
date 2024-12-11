@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../auth/useAuth"
+import UserDropdown from "../components/UI/userDropdown"
 
 export default function RootLayout() {
   const { isAuthenticated, logout, user } = useAuth()
@@ -12,7 +13,7 @@ export default function RootLayout() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-100">
-      <header className="sticky top-0 z-50 bg-slate-600 text-white p-4">
+      <header className="sticky top-0 bg-slate-600 text-white p-4 z-0">
         <div className="container mx-auto flex justify-between items-center">
           <NavLink to="/" className="text-2xl font-bold">
             GreekDevs
@@ -51,13 +52,7 @@ export default function RootLayout() {
                       Log out
                     </button>
                   </li>
-                  <li>
-                    {user && (
-                      <div className=" bg-blue-500 text-lg p-2 w-10 h-10 rounded-full flex justify-center items-center">
-                        {user.username.substring(0, 1)}
-                      </div>
-                    )}
-                  </li>
+                  <li>{user && <UserDropdown user={user} />}</li>
                 </div>
               ) : (
                 <>
